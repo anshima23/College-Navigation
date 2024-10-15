@@ -1,0 +1,74 @@
+/* src/Footer.css */
+
+.footer {
+    background-color: #5c5656; /* Dark background color */
+    padding: 20px; /* Padding around the footer */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+}
+
+.footer-content {
+    font-size: 18px;
+    color: rgb(125, 117, 117);
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: space-between; /* Space out the groups evenly */
+    width: 100%; /* Full width of the footer */
+    max-width: 1200px; /* Optional max width for better layout */
+}
+
+
+
+.footer-group {
+    color: white;
+    text-decoration: none;
+    flex: 1; /* Allow groups to grow equally */
+    margin: 0 20px; /* Margin between groups */
+}
+
+
+.footer-group h3 {
+    font-size: 25px;
+    margin-bottom: 10px; /* Space below headings */
+}
+
+.footer-group p, .footer-group ul {
+    font-size: 20px;
+    color: rgb(232, 225, 225);
+    margin: 5px 0; /* Space between paragraphs and list items */
+}
+
+.footer-group ul {
+    padding: 0; /* Remove padding from list */
+}
+
+.footer-group a {
+    color: rgb(232, 225, 225);
+    text-decoration: none; /* Remove underline from links */
+}
+
+.footer-group a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+.contact-item {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 10px; /* Space between contact items */
+}
+
+
+.icon {
+    width: 20px; /* Set width for the icon */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Space between icon and text */
+}
+
+
+.footer-bottom {
+    margin-top: 20px; /* Space above bottom text */
+    text-align: center; /* Center text */
+}
+
+
+/* src/Footer.css */
+

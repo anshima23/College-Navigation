@@ -1,0 +1,52 @@
+/* src/pages/Navbar/navbar.css */
+
+.navbar {
+  background-color: #333; /* Navbar background color */
+  color: #fff; /* Text color */
+  padding: 5px 20px; /* Reduced padding for a compact navbar */
+  display: flex; /* Align logo and menu items horizontally */
+  align-items: center; /* Center items vertically */
+  height: 60px; /* Set a fixed height for the navbar */
+}
+
+.navbar img.college-logo {
+  height: 40px; /* Set a small height for the logo */
+  width: auto; /* Maintain aspect ratio */
+  margin-right: 15px; /* Space between logo and menu */
+}
+
+.navbar ul {
+  justify-content: center; /* Center the list in the navbar */
+  flex-grow: 1; /* Allow the ul to take up available space */
+  list-style: none; /* Remove bullet points */
+  display: flex; /* Arrange list items horizontally */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.navbar li {
+  margin: 0 15px; /* Space between menu items */
+}
+
+.navbar a {
+  color: #fff; /* Link text color */
+  text-decoration: none; /* Remove underline */
+  font-size: 16px; /* Set font size for menu items */
+}
+
+.navbar a:hover {
+  text-decoration: underline; /* Underline effect on hover */
+}
+
+/* New styles for navbar icons */
+.navbar-icons {
+  display: flex; /* Display icons in a row */
+  align-items: center; /* Center icons vertically */
+}
+
+.icon {
+  width: 30px; /* Set icon size */
+  height: auto; /* Maintain aspect ratio */
+  margin-left: 15px; /* Space between icons */
+  filter: brightness(0) invert(1); /* Make icons white using CSS filter */
+}

@@ -1,0 +1,114 @@
+/* src/pages/home.css */
+
+.hero-container {
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
+    justify-content: center; /* Center children vertically */
+    height: calc(100vh - 60px); /* Full height of the viewport minus navbar height */
+    margin: 0 auto; /* Center the container */
+    padding: 0; /* Remove any padding */
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+.college-image {
+    width: calc(100% - 60px); /* Set width to full minus left and right margins */
+    height: auto; /* Maintain aspect ratio instead of fixed height */
+    max-height: 80%; /* Limit maximum height to avoid overflowing */
+    margin: 0; /* Remove margin */
+    margin-top: 5%; /* Ensure image starts below the navbar */
+    border-radius: 15px; /* Rounded corners */
+}
+
+.btn {
+    background-color: white; /* Button background color */
+    color: black; /* Button text color */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Add padding for better size */
+    cursor: pointer; /* Change cursor on hover */
+    border-radius: 8px; /* Adjust this value for more or less rounding */
+    transition: background-color 0.3s; /* Smooth transition for hover effects */
+}
+
+.btn:hover {
+    background-color: #f0f0f0; /* Change background on hover */
+}
+
+.details-button{
+ text-decoration: none;
+ color: black;
+}
+
+.hero-button {
+    background-color: #333; /* Button background color */
+    color: #fff; /* Button text color */
+    width: 20%; /* Set button width */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding */
+    font-size: 28px; /* Font size */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+    margin-top: -30px; /* Pull button up into image area */
+    z-index: 1; /* Ensure button is above the image */
+    border-radius: 25px; /* Rounded corners for the button */
+    text-align: center; /* Center text */
+}
+
+.hero-button:hover {
+    background-color: #555; /* Change background on hover */
+}
+
+/* Body Section Styles */
+
+.body-section {
+    width: 80%; /* Set width of body section */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack rows vertically */
+    align-items: center; /* Center boxes horizontally */
+    margin: 20px auto; /* Center the body section with margin */
+    padding: 10px; /* Add padding for inner spacing */
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+.box-row {
+    display: flex; /* Use flexbox for rows */
+    justify-content: space-between; /* Space boxes evenly */
+    width: 100%; /* Make row take full width */
+    margin: 30px 0; /* Space between rows */
+}
+
+.box {
+    background-color: #e0e0e0; /* Light gray background for the boxes */
+    flex: 1; /* Allow boxes to grow equally */
+    height: auto; /* Allow box height to adjust based on content */ 
+    min-height: 200px; /* Minimum height for each box for consistency */ 
+    margin: 0 10px; /* Space between boxes */
+    display: flex; /* Use flexbox for centering content inside each box*/
+    flex-direction: column; /* Stack content vertically (image, heading, description)*/
+    align-items: center; /* Center items horizontally within box*/
+    justify-content: center; /* Center items vertically within box*/
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for a 3D effect */
+
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+    
+   .hero-button {
+        width: 80%; /* Make button wider on small screens */ 
+   }
+
+   .body-section {
+        width: 100%; /* Make body section full width on small screens */ 
+   }
+
+   .box-row {
+        flex-direction: column; /* Stack boxes vertically on small screens */ 
+   }
+
+   .box { 
+        width: 100%; /* Make boxes full width on small screens */ 
+        margin-bottom: 10px; /* Space between boxes */ 
+   }
+}

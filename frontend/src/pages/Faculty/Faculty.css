@@ -1,0 +1,65 @@
+.faculty-page {
+    padding: 20px;
+  }
+  
+  .department-heading-bar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .department-button {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .department-button.active,
+  .department-button:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .faculty-list {
+    margin-top: 20px;
+  }
+  
+  .faculty-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .faculty-card {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .faculty-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .faculty-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .faculty-info strong {
+    font-size: 1.1em;
+  }
+  
+  .faculty-info p {
+    margin: 0;
+    color: #666;
+  }
+  

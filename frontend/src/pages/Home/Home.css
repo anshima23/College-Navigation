@@ -1,0 +1,88 @@
+/* src/pages/home.css */
+
+/* Body Section Styles */
+.body-section {
+    width: 80%; /* Set width of body section */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack rows vertically */
+    align-items: center; /* Center boxes horizontally */
+    margin: 20px auto; /* Center the body section with margin */
+    padding: 10px; /* Add padding for inner spacing */
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+.box-row {
+    display: flex; /* Use flexbox for rows */
+    justify-content: space-between; /* Space boxes evenly */
+    width: 100%; /* Make row take full width */
+    margin: 30px 0; /* Space between rows */
+}
+
+/* Box Styles */
+.box {
+    background-color: #e0e0e0; /* Light gray background for the boxes */
+    flex: 1; /* Allow boxes to grow equally */
+    margin: 0 10px; /* Space between boxes */
+    display: flex; /* Use flexbox for centering content */
+    flex-direction: column; /* Stack content vertically (image, heading, description) */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically within box */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for a 3D effect */
+    padding: 20px; /* Add padding to create space inside the box */
+}
+
+/* Circle Image Container Styles */
+.circle-image-container {
+    background-color: white;
+    width: 220px; /* Set width of circle container (adjusted for better fit) */
+    height: 220px; /* Set height of circle container (adjusted for better fit) */
+    border-radius: 50%; /* Make it circular */
+    overflow: hidden; /* Hide overflow to maintain circular shape */
+    display: flex; /* Use flex to center image inside */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    margin-bottom: 15px; /* Space below circle image container (increased for better spacing) */
+}
+
+/* Box Image Styles */
+.box-image {
+    width: 60%; /* Adjusted image size to fit better within the circle container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Heading Styles */
+.box-heading {
+    text-decoration: none;
+    font-size: 1.4em; /* Adjust heading size for better visibility */
+    margin-bottom: 5px; /* Space below heading */
+}
+
+.hero-button{
+    text-decoration: none;
+}
+
+/* Description Styles */
+.box-description {
+    margin: 15px;
+    font-size: 1em; /* Adjust paragraph size for readability */
+    text-align: center; /* Center text alignment for better aesthetics */
+}
+
+/* Adjust for smaller screens */
+/* Other media queries remain unchanged... */
+
+@media (max-width: 768px) {
+   .body-section {
+       width: 100%; /* Make body section full width on small screens */ 
+   }
+
+   .box-row {
+       flex-direction: column; /* Stack boxes vertically on small screens */ 
+   }
+
+   .box { 
+       width: 100%; /* Make boxes full width on small screens */ 
+       margin-bottom: 10px; /* Space between boxes */ 
+   }
+}
