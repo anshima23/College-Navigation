@@ -1,6 +1,6 @@
 // src/models/user.model.js
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Method to hash the password before saving the user
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
     if (this.isModified('passwordHash')) {
         this.passwordHash = await bcrypt.hash(this.passwordHash, 10);
     }
@@ -23,8 +23,9 @@ userSchema.pre('save', async function(next) {
 });
 
 // Method to compare passwords
-userSchema.methods.comparePassword = async function(password) {
+userSchema.methods.comparePassword = async function (password) {
     return await bcrypt.compare(password, this.passwordHash);
 };
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+export default User; // Export the User model as default

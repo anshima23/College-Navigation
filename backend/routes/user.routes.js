@@ -1,9 +1,17 @@
 // src/routes/user.routes.js
-
-const express = require('express');
-const User = require('../models/user.model');
+import express from 'express';
+import User from '../models/user.model.js'; // Ensure the model uses .js extension
 
 const router = express.Router();
+
+// Middleware to validate user data
+const validateUserData = (req, res, next) => {
+    const { username, passwordHash } = req.body;
+    if (!username || !passwordHash) {
+        return res.status(400).json({ message: 'Invalid user data' });
+    }
+    next();
+};
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -15,13 +23,12 @@ router.get('/', async (req, res) => {
             username: user.username,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
-            // Add other fields as necessary
         }));
-        
+
         res.json(usersWithoutPasswordHash);
-        
     } catch (err) {
-       return  res.status(500).json({ message: err.message });
+        console.error(err); // Log error for debugging
+        return res.status(500).json({ message: err.message });
     }
 });
 
@@ -30,43 +37,49 @@ router.get('/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
-        res.json(user);
+        // Exclude password hash from response
+        const { passwordHash, ...userWithoutPasswordHash } = user.toObject();
+        return res.json(userWithoutPasswordHash);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error(err); // Log error for debugging
+        return res.status(500).json({ message: err.message });
     }
 });
 
 // Create a new user
-router.post('/', async (req, res) => {
+router.post('/', validateUserData, async (req, res) => {
     const user = new User(req.body); // Make sure to send the passwordHash in the request body.
     try {
         const savedUser = await user.save();
-        res.status(201).json(savedUser);
-    } catch(err){
-        res.status(400).json({message : err.message})
+        return res.status(201).json(savedUser);
+    } catch (err) {
+        console.error(err); // Log error for debugging
+        return res.status(400).json({ message: err.message });
     }
 });
 
 // Update a user
-router.put('/:id', async (req, res)=> {
-    try{
-        const updatedUser=await User.findByIdAndUpdate(req.params.id, req.body,{new:true});
-        if(!updatedUser)return(res.sendStatus(404));
-        res.json(updatedUser)
-    }catch(err){
-        res.sendStatus(400)
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedUser) return res.sendStatus(404);
+        return res.json(updatedUser);
+    } catch (err) {
+        console.error(err); // Log error for debugging
+        return res.sendStatus(400);
     }
 });
 
 // Delete a user
-router.delete('/:id',async(req,res)=>{
-   try{
-       const deletedUser=await User.findByIdAndDelete(req.params.id)
-       if(!deletedUser)return(res.sendStatus(404));
-       return(res.sendStatus(204))
-   }catch(err){
-       return(res.sendStatus(500))
-   }
-})
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
+        if (!deletedUser) return res.sendStatus(404);
+        return res.sendStatus(204);
+    } catch (err) {
+        console.error(err); // Log error for debugging
+        return res.sendStatus(500);
+    }
+});
 
-module.exports=router;
+export default router; // Export the router as default

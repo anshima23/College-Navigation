@@ -1,5 +1,6 @@
 // src/models/building.model.js
-const mongoose = require('mongoose');
+
+import mongoose from 'mongoose';
 
 const buildingSchema = new mongoose.Schema({
     name: {
@@ -23,4 +24,6 @@ const buildingSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Building', buildingSchema);
+const Building = mongoose.model('Building', buildingSchema);
+
+export default Building; // Default export

@@ -1,5 +1,5 @@
 // src/models/faculty.model.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const facultySchema = new mongoose.Schema({
     name: {
@@ -20,4 +20,5 @@ const facultySchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Faculty', facultySchema);
+const Faculty = mongoose.model('Faculty', facultySchema);
+export default Faculty; // Export the Faculty model as default

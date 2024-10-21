@@ -1,5 +1,6 @@
 // src/App.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home/Home';
@@ -10,8 +11,20 @@ import Navigate from './pages/Navigate/Navigate';
 import EventDetail from './pages/Events/EventDetail'; // Import the EventDetail component
 
 function App() {
+  const [data, setData] = useState("");
+
+  const getData = async () => {
+    const response = await Axios.get("http://localhost:5000/getData");
+    setData(response.data);
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Router>
+      <div>{data}</div>
       <div>
         <Navbar />
         <Routes>
@@ -20,7 +33,7 @@ function App() {
           <Route path="/campus-map" element={<CampusMap />} />
           <Route path="/college-faculty" element={<Faculty />} />
           <Route path="/events-scheduled" element={<Events />} />
-          <Route path="/event/:id" element={<EventDetail />} /> {/* New route for event details */}
+          <Route path="/event/:id" element={<EventDetail />} /> 
         </Routes>
       </div>
     </Router>
