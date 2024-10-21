@@ -1,0 +1,39 @@
+/* src/pages/navigate.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navigate-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full height for the container */
+}
+
+h1 {
+    text-align: center;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input {
+    margin-right: 10px;
+    padding: 10px;
+    flex-grow: 1; /* Allow inputs to grow */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}

@@ -7,7 +7,6 @@ const cors = require('cors');
 require('dotenv').config(); // Load environment variables from .env file
 
 // Import routes
-// Import routes
 const buildingRoutes = require('./routes/building.routes');
 const facultyRoutes = require('./routes/faculty.routes');
 const eventRoutes = require('./routes/event.routes');
@@ -61,5 +60,16 @@ const startServer = async () => {
         console.log(`Server is running on http://localhost:${PORT}`);
     });
 };
+
+// Handle uncaught exceptions and unhandled promise rejections
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err.message);
+    process.exit(1); // Exit process with failure
+});
+
+process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection:', err.message);
+    process.exit(1); // Exit process with failure
+});
 
 startServer();

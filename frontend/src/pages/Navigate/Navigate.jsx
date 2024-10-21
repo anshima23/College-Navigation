@@ -1,8 +1,9 @@
 // src/pages/Navigate.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import './navigate.css'; // Import the CSS file
 
 // Import marker icon images
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -17,54 +18,45 @@ L.Icon.Default.mergeOptions({
 });
 
 const Navigate = () => {
-    const [currentLocation, setCurrentLocation] = useState({ lat: 40.7128, lng: -74.0060 }); // Default: New York City
-    const [destination, setDestination] = useState({ lat: 34.0522, lng: -118.2437 }); // Default: Los Angeles
+    const [currentLocation, setCurrentLocation] = useState('');
+    const [destination, setDestination] = useState('');
+
+    // Coordinates for Ajay Kumar Garg Engineering College
+    const collegeCoordinates = { lat: 28.6757, lng: 77.5020 };
 
     const handleFindRoute = () => {
         // Logic for route finding can be implemented here
         console.log("Current Location:", currentLocation);
         console.log("Destination:", destination);
+        // You might want to implement geocoding here to convert text to lat/lng
     };
 
     return (
-        <div>
+        <div className="navigate-container">
             <h1>Welcome to the Navigate Page</h1>
-            <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
+            <div className="input-container">
                 <input
                     type="text"
-                    placeholder="Current Location (lat,lng)"
-                    value={`${currentLocation.lat},${currentLocation.lng}`}
-                    onChange={(e) => {
-                        const [lat, lng] = e.target.value.split(',').map(Number);
-                        setCurrentLocation({ lat, lng });
-                    }}
-                    style={{ marginBottom: '10px', padding: '10px' }}
+                    placeholder="Current Location"
+                    value={currentLocation}
+                    onChange={(e) => setCurrentLocation(e.target.value)}
                 />
                 <input
                     type="text"
-                    placeholder="Destination (lat,lng)"
-                    value={`${destination.lat},${destination.lng}`}
-                    onChange={(e) => {
-                        const [lat, lng] = e.target.value.split(',').map(Number);
-                        setDestination({ lat, lng });
-                    }}
-                    style={{ marginBottom: '10px', padding: '10px' }}
+                    placeholder="Destination"
+                    value={destination}
+                    onChange={(e) => setDestination(e.target.value)}
                 />
-                <button onClick={handleFindRoute} style={{ padding: '10px', backgroundColor: '#007BFF', color: '#fff' }}>
-                    Find Route
-                </button>
+                <button onClick={handleFindRoute}>Find Route</button>
             </div>
 
-            <MapContainer center={currentLocation} zoom={5} style={{ height: "400px", width: "100%" }}>
+            <MapContainer center={[collegeCoordinates.lat, collegeCoordinates.lng]} zoom={15} style={{ height: "100vh", width: "100%" }}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                <Marker position={currentLocation}>
-                    <Popup>Current Location</Popup>
-                </Marker>
-                <Marker position={destination}>
-                    <Popup>Destination</Popup>
+                <Marker position={[collegeCoordinates.lat, collegeCoordinates.lng]}>
+                    <Popup>Ajay Kumar Garg Engineering College</Popup>
                 </Marker>
             </MapContainer>
         </div>

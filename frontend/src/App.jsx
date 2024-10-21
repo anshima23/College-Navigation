@@ -6,14 +6,14 @@ import Home from './pages/Home/Home';
 import CampusMap from './pages/CampusMap/CampusMap';
 import Faculty from './pages/Faculty/Faculty';
 import Events from './pages/Events/Events';
-import Navigate from "./pages/Navigate/Navigate";
+import Navigate from './pages/Navigate/Navigate';
 import EventDetail from './pages/Events/EventDetail'; // Import the EventDetail component
 
 function App() {
   return (
     <Router>
       <div>
-        <Navbar/>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/navigate" element={<Navigate />} />
