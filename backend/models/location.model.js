@@ -1,4 +1,3 @@
-// src/models/location.model.js
 import mongoose from 'mongoose';
 
 const locationSchema = new mongoose.Schema({
@@ -18,7 +17,17 @@ const locationSchema = new mongoose.Schema({
         },
     },
     description: String,
+    connections: [{
+        name: {
+            type: String, 
+            required: true
+        },
+        distance: {
+            type: Number, // Distance in meters or kilometers
+            required: true
+        }
+    }]
 }, { timestamps: true });
 
 const Location = mongoose.model('Location', locationSchema);
-export default Location; // Export the Location model as default
+export default Location;

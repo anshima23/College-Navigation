@@ -1,5 +1,3 @@
-// src/server.js
-
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -39,6 +37,15 @@ const connectDB = async () => {
         process.exit(1); // Exit process with failure
     }
 };
+
+// Add the new /api/locations route
+app.get('/api/locations', (req, res) => {
+    const locations = [
+        { name: 'Location A', coordinates: [40.712776, -74.005974], connections: [] },
+        { name: 'Location B', coordinates: [34.052235, -118.243683], connections: [] }
+    ];
+    res.json(locations);  // Ensure this sends JSON
+});
 
 // Define the fuzzy search route using Fuse.js
 app.get('/api/locations/search', async (req, res) => {
