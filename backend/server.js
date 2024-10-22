@@ -1,12 +1,8 @@
-// src/server.js
-
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config(); // Load environment variables from .env file
 
-// Import routes
 // Import routes
 const buildingRoutes = require('./routes/building.routes');
 const facultyRoutes = require('./routes/faculty.routes');
@@ -18,9 +14,17 @@ const locationRoutes = require('./routes/location.routes');
 const app = express();
 const PORT = process.env.PORT || 3000; // Use PORT from environment or default to 3000
 
+// CORS options
+const corsOptions = {
+    origin: 'http://localhost:8000', // Allow requests from the frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    credentials: true, // Allow credentials
+};
+
 // Middleware
-app.use(cors()); // Enable CORS for all routes
-app.use(bodyParser.json()); // Parse JSON bodies
+app.use(cors(corsOptions)); // Enable CORS with options
+app.use(express.json()); // Built-in middleware to parse JSON bodies
 
 // Connect to MongoDB
 const connectDB = async () => {
@@ -61,5 +65,13 @@ const startServer = async () => {
         console.log(`Server is running on http://localhost:${PORT}`);
     });
 };
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+    mongoose.connection.close(() => {
+        console.log('MongoDB connection closed due to app termination');
+        process.exit(0);
+    });
+});
 
 startServer();
