@@ -51,7 +51,7 @@
 
 /* Know More Button Styling */
 .know-more-button {
-    background-color:grey; /* Primary button color */
+    background-color: grey; /* Primary button color */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -60,7 +60,8 @@
     margin-top: 10px;
     cursor: pointer;
     text-align: center;
-    width: 30%; /* Full width of the card */
+    width: 30%; /* Width of the button */
+    text-decoration: none; /* Ensure no underline */
 }
 
 .know-more-button:focus {

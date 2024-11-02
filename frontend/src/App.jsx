@@ -34,6 +34,7 @@ function App() {
           <Route path="/college-faculty/:id" element={<BuildingDetails />} />
           <Route path="/events-scheduled" element={<Events />} />
           <Route path="/event/:id" element={<EventDetail />} /> 
+          <Route path="/building/:id" element={<BuildingDetails />} />
         </Routes>
       </div>
     </Router>

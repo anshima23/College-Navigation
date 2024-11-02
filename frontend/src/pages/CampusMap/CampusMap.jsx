@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './CampusMap.css';
 
 const CampusMap = () => {
@@ -24,7 +24,9 @@ const CampusMap = () => {
                         <img src={building.imageUrl} alt={building.name} className="building-image" />
                         <h2 className="building-name">{building.name}</h2>
                         <p className="building-description">{building.description}</p>
-                        <button className="know-more-button">Know More</button>
+                        <Link to={`/building/${building._id}`} className="know-more-button">
+                            Know More
+                        </Link>
                     </div>
                 ))}
             </div>
