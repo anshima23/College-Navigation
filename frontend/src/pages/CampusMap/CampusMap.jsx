@@ -23,7 +23,7 @@ const CampusMap = () => {
                     <div key={building._id} className="building-card">
                         <img src={building.imageUrl} alt={building.name} className="building-image" />
                         <h2 className="building-name">{building.name}</h2>
-                        <p className="building-description">{building.description}</p>
+                        <p className="building-description">{building.shortDescription}</p> {/* Use short description here */}
                         <Link to={`/building/${building._id}`} className="know-more-button">
                             Know More
                         </Link>

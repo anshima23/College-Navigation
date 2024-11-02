@@ -1,46 +1,39 @@
 /* Building Detail Styling */
 .building-detail {
     padding: 20px;
-    max-width: 800px; /* Limit the maximum width of the content */
-    margin: 0 auto; /* Center the content */
-    text-align: center; /* Center text for a cleaner look */
-    background-color: #f9f9f9; /* Light background for contrast */
-    border-radius: 10px; /* Rounded corners for a softer look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center-align text and image */
 }
 
-.building-detail h1 {
+.building-name {
     font-size: 2em; /* Larger font size for the building name */
-    color: #333; /* Dark color for the title */
-    margin-bottom: 15px; /* Space below the title */
+    margin-bottom: 20px; /* Space below the name */
+    color: #333; /* Color for the building name */
 }
 
 .building-detail-image {
-    width: 100%; /* Full width of the container */
+    width: 80%; /* Greater width for the image */
     height: auto; /* Maintain aspect ratio */
     border-radius: 10px; /* Rounded corners for the image */
     margin-bottom: 20px; /* Space below the image */
 }
 
-.building-detail p {
-    font-size: 1.2em; /* Slightly larger font for better readability */
-    color: #555; /* Soft color for description text */
-    line-height: 1.6; /* Increased line height for better spacing */
+.building-description {
+    font-size: 1.2em; /* Increased size for better readability */
+    color: #555; /* Subtle color for description text */
+    line-height: 1.5; /* Better line height for readability */
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .building-detail {
-        padding: 15px; /* Reduce padding on smaller screens */
+    .building-detail-image {
+        width: 100%; /* Full width on smaller screens */
     }
 
-    .building-detail h1 {
-        font-size: 1.5em; /* Smaller title on mobile */
+    .building-name {
+        font-size: 1.5em; /* Smaller font size on mobile */
     }
 
-    .building-detail p {
-        font-size: 1em; /* Smaller font size for description */
+    .building-description {
+        font-size: 1em; /* Adjust font size on mobile */
     }
 }
-
-

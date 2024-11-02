@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import './BuildingDetail.css'; // Optional CSS for detailed view
+import './BuildingDetail.css'; // CSS for detailed view
 
 const BuildingDetail = () => {
     const { id } = useParams(); // Get the building ID from the URL
@@ -19,9 +19,9 @@ const BuildingDetail = () => {
 
     return (
         <div className="building-detail">
-            <h1>{building.name}</h1>
+            <h1 className="building-name">{building.name}</h1>
             <img src={building.imageUrl} alt={building.name} className="building-detail-image" />
-            <p>{building.description}</p>
+            <p className="building-description">{building.detailedDescription}</p> {/* Use detailed description here */}
             {/* Additional details about the building can be added here */}
         </div>
     );
