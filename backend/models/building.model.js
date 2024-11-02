@@ -1,5 +1,3 @@
-// src/models/building.model.js
-
 import mongoose from 'mongoose';
 
 const buildingSchema = new mongoose.Schema({
@@ -10,6 +8,9 @@ const buildingSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
+    },
+    imageUrl: { // Optional image URL field for the building's image
+        type: String,
     },
     location: {
         type: {
@@ -26,4 +27,4 @@ const buildingSchema = new mongoose.Schema({
 
 const Building = mongoose.model('Building', buildingSchema);
 
-export default Building; // Default export
+export default Building;

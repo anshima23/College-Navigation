@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000; // Default to port 5000 if not in .env
 const MONGOURL = process.env.MONGODB_URI;
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes
+app.use(cors({ origin: true }));
 app.use(express.json()); // Parse JSON bodies
 
 // Connect to MongoDB

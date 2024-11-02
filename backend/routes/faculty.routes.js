@@ -72,4 +72,21 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.get('/department/:departmentName', async (req, res) => {
+    const { departmentName } = req.params;
+
+    try {
+        // Fetch faculty members based on the department
+        const facultyMembers = await Faculty.find({ department: departmentName }); // Adjust the query based on your model
+        if (!facultyMembers || facultyMembers.length === 0) {
+            return res.status(404).json({ message: 'No faculty found for this department.' });
+        }
+        res.status(200).json(facultyMembers);
+    } catch (error) {
+        console.error('Error fetching faculty:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 export default router; // Export the router as default

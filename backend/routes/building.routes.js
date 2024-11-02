@@ -1,5 +1,6 @@
+// routes/building.js
 import express from 'express';
-import mongoose from 'mongoose'; // Import mongoose
+import mongoose from 'mongoose';
 import Building from '../models/building.model.js';
 
 const router = express.Router();
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
         const buildings = await Building.find();
         res.json(buildings);
     } catch (err) {
-        console.error(err); // Log the error for debugging
+        console.error(err);
         res.status(500).json({ message: 'Server error' });
     }
 });
@@ -27,9 +28,7 @@ router.get('/', async (req, res) => {
 // Get a specific building by ID
 router.get('/:id', async (req, res) => {
     try {
-        const id = req.params.id.trim(); // Trim to remove newlines and spaces
-
-        // Check if it's a valid ObjectId
+        const id = req.params.id.trim();
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('Invalid Building ID');
         }
@@ -42,7 +41,7 @@ router.get('/:id', async (req, res) => {
 
         res.json(building);
     } catch (err) {
-        console.error(err); // Log the error for debugging
+        console.error(err);
         res.status(500).send(err.message || 'Internal Server Error');
     }
 });
@@ -54,7 +53,7 @@ router.post('/', validateBuildingData, async (req, res) => {
         const savedBuilding = await building.save();
         res.status(201).json(savedBuilding);
     } catch (err) {
-        console.error(err); // Log the error for debugging
+        console.error(err);
         res.status(400).json({ message: 'Error creating building' });
     }
 });
@@ -66,7 +65,7 @@ router.put('/:id', validateBuildingData, async (req, res) => {
         if (!updatedBuilding) return res.status(404).json({ message: 'Building not found' });
         res.json(updatedBuilding);
     } catch (err) {
-        console.error(err); // Log the error for debugging
+        console.error(err);
         res.status(400).json({ message: 'Error updating building' });
     }
 });
@@ -78,9 +77,9 @@ router.delete('/:id', async (req, res) => {
         if (!deletedBuilding) return res.status(404).json({ message: 'Building not found' });
         res.json({ message: 'Building deleted successfully' });
     } catch (err) {
-        console.error(err); // Log the error for debugging
+        console.error(err);
         res.status(500).json({ message: 'Server error' });
     }
 });
 
-export default router; // Use export default
+export default router;

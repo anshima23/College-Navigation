@@ -1,4 +1,42 @@
 /* src/pages/home.css */
+/* Hero Section Styles */
+.hero-container {
+    position: relative;
+    width: 100vw;
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Hero Image */
+.college-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Hero Button (Half Inside, Half Outside Image) */
+.hero-button {
+    position: absolute;
+    bottom: -15px; /* Move button up so half of it overlaps with image */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #0073e6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow for emphasis */
+}
+
+.hero-button:hover {
+    background-color: #005bb5;
+}
 
 /* Body Section Styles */
 .body-section {
