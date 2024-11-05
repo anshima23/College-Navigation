@@ -1,118 +1,46 @@
-// src/pages/Events/EventDetail.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import './EventDetail.css';
 
 const EventDetail = () => {
-  const { id } = useParams();
+  const { eventId } = useParams(); // Get event ID from URL parameters
+  const [event, setEvent] = useState(null); // State to hold the event details
+  const [loading, setLoading] = useState(true); // Loading state
 
-  // Sample data for demonstration. In a real app, this could come from an API.
-  const events = {
-    1: {
-      name: "Tech Conference 2023",
-      description: "A conference about technology advancements.",
-      date: "March 15, 2023",
-      location: "Tech City Convention Center",
-    },
-    2: {
-      name: "Science Symposium 2022",
-      description: "A gathering of scientists and researchers.",
-      date: "August 10, 2022",
-      location: "Science Hall",
-    },
-    // Add other events similarly...
-    // Assuming IDs match those in Events.jsx
-    3: {
-      name: "Hackathon 2021",
-      description: "An event for coding enthusiasts to collaborate.",
-      date: "November 5-7, 2021",
-      location: "Innovation Lab",
-    },
-    // ... (Add all other events)
-    // For simplicity, let's assume we only define a few here.
-    // You can also fetch this data from an API based on the ID.
-    
-    // Example for running events
-    4: {
-      name: "AI & ML Summit 2024",
-      description: "Explore the latest in AI and machine learning.",
-      date: "April 20, 2024",
-      location: "AI Hub",
-    },
-    // Future events...
-    // ... (Add all other events)
-    
-    // Example for future events
-    6: {
-      name: "Robotics Expo 2025",
-      description: "Showcasing the latest in robotics technology.",
-      date: "September 12-14, 2025",
-      location: "Expo Center",
-    }
-    
-    
+  // Log the eventId to check if it's correctly captured
+  console.log('Event ID from URL params:', eventId);
 
-    
-    
+  // Fetch event details from the backend
+  useEffect(() => {
+    const fetchEventDetail = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/events/${id}`);
+        if (!response.ok) throw new Error(`Failed to fetch event details, status: ${response.status}`);
+        const data = await response.json();
+        setEvent(data);
+      } catch (error) {
+        console.error('Error fetching event detail:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    
-    
+    if (eventId) fetchEventDetail();
+  }, [eventId]);
 
-    
-    
+  if (loading) return <div>Loading...</div>; // Show loading indicator while fetching
+  if (!event) return <div>No event found</div>; // Handle case when no event is found
 
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
-  
-};
-
-const eventDetails = events[id]; // Get the specific event details based on ID
-
-if (!eventDetails) return <p>No event found.</p>;
-
-return (
-<div>
-<h1>{eventDetails.name}</h1>
-<p>{eventDetails.description}</p>
-<p><strong>Date:</strong> {eventDetails.date}</p>
-<p><strong>Location:</strong> {eventDetails.location}</p>
-</div>
-);
+  return (
+    <div className="event-detail-container">
+      <h1>{event.title}</h1>
+      <img src={event.image} alt={event.title} className="event-detail-image" />
+      <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+      <p><strong>Time:</strong> {new Date(event.date).toLocaleTimeString()}</p>
+      <p><strong>Location:</strong> {event.location}</p>
+      <p><strong>Description:</strong> {event.description}</p>
+    </div>
+  );
 };
 
 export default EventDetail;

@@ -8,12 +8,29 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    dateTime: {
+    date: {
+        type: Date,
+        required: true,
+    },
+    Time: {
         type: Date,
         required: true,
     },
     location: {
         type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: String, // URL of the event image
+        required: true,
+    },
+    category: {
+        type: String,
+        enum: ['previous', 'running', 'future'], // Define categories
         required: true,
     },
 });
