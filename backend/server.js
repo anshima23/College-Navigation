@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import Fuse from 'fuse.js'; // Import Fuse.js for fuzzy searching
+import http from 'http'; // Import http for creating the server
+import { Server } from 'socket.io'; // Correctly import Server from socket.io
 
 // Load environment variables from .env file
 dotenv.config();
@@ -24,6 +26,10 @@ const MONGOURL = process.env.MONGODB_URI;
 app.use(cors({ origin: true }));
 app.use(express.json()); // Parse JSON bodies
 
+// Create HTTP server and integrate with Socket.IO
+const server = http.createServer(app);
+const io = new Server(server); // Initialize Socket.IO with the HTTP server
+
 // Connect to MongoDB
 const connectDB = async () => {
     try {
@@ -38,37 +44,50 @@ const connectDB = async () => {
     }
 };
 
-// Add the new /api/locations route
-app.get('/api/locations', (req, res) => {
-    const locations = [
-        { name: 'Location A', coordinates: [40.712776, -74.005974], connections: [] },
-        { name: 'Location B', coordinates: [34.052235, -118.243683], connections: [] }
-    ];
-    res.json(locations);  // Ensure this sends JSON
+// Socket.IO connection handling
+io.on("connection", (socket) => {
+    console.log("User connected:", socket.id);
+
+    // Listen for location updates from the client
+    socket.on("send-location", (data) => {
+        io.emit("receive-location", { id: socket.id, ...data }); // Broadcast location to all clients
+    });
+
+    // Handle user disconnect
+    socket.on("disconnect", () => {
+        io.emit("user-disconnected", socket.id); // Notify others that this user has disconnected
+        console.log("User disconnected:", socket.id);
+    });
 });
 
-// Define the fuzzy search route using Fuse.js
+// Example route for fetching locations (you can modify this as needed)
+app.get('/api/locations', async (req, res) => {
+    try {
+        const locations = await Location.find(); // Fetch locations from MongoDB
+        res.json(locations);  // Send JSON response
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching locations' });
+    }
+});
+
+// Define the fuzzy search route using Fuse.js (if applicable)
 app.get('/api/locations/search', async (req, res) => {
-    const query = req.query.q; // Get the search query from the URL (e.g., /search?q=location)
+    const query = req.query.q; // Get the search query from the URL
 
     if (!query) {
         return res.status(400).json({ message: 'Search query is required' });
     }
 
     try {
-        // Fetch all locations from MongoDB
-        const locations = await Location.find();
+        const locations = await Location.find(); // Fetch all locations
 
-        // Initialize Fuse.js for fuzzy matching
         const fuse = new Fuse(locations, {
             keys: ['name'], // Search based on the 'name' field in locations
-            threshold: 0.3, // Adjust the threshold to control the fuzzy matching level
+            threshold: 0.3,
         });
 
-        // Perform the fuzzy search with the user's query
         const result = fuse.search(query);
 
-        // If results are found, return them
         if (result.length > 0) {
             return res.json(result.map(item => item.item)); // Send matched locations
         } else {
@@ -83,7 +102,7 @@ app.get('/api/locations/search', async (req, res) => {
     }
 });
 
-// Use other routes
+// Use other routes for buildings, faculty, events, users (define these routes in separate files)
 app.use('/api/buildings', buildingRoutes);
 app.use('/api/faculty', facultyRoutes);
 app.use('/api/events', eventRoutes);
@@ -112,7 +131,7 @@ app.use((err, req, res, next) => {
 // Start the server and connect to the database
 const startServer = async () => {
     await connectDB(); // Connect to the database first
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log(`Server is running on http://localhost:${PORT}`);
     });
 };

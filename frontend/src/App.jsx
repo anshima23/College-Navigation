@@ -8,7 +8,10 @@ import Faculty from './pages/Faculty/Faculty';
 import Events from './pages/Events/Events';
 import Navigate from './pages/Navigate/Navigate';
 import EventDetail from './pages/Events/EventDetail';
+import Track from './pages/Home/Track';
 import BuildingDetails from './pages/CampusMap/BuildingDetails';
+
+// Import the App.js file from the geolocation folder
 
 function App() {
   const [data, setData] = useState("");
@@ -16,7 +19,7 @@ function App() {
   const getData = async () => {
     const response = await Axios.get("http://localhost:3000/getData");
     setData(response.data);
-  }
+  };
 
   useEffect(() => {
     getData();
@@ -33,7 +36,9 @@ function App() {
           <Route path="/college-faculty" element={<Faculty />} />
           <Route path="/college-faculty/:id" element={<BuildingDetails />} />
           <Route path="/events-scheduled" element={<Events />} />
-          <Route path="/event/:id" element={<EventDetail />} /> 
+          <Route path="/event/:id" element={<EventDetail />} />
+          {/* Add the /track route */}
+          <Route path="/track" element={<Track />} />
         </Routes>
       </div>
     </Router>
