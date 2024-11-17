@@ -1,0 +1,26 @@
+/* src/pages/track.css */
+
+/* Body styles */
+body {
+    margin: 0; /* Remove default margin */
+    font-family: Arial, sans-serif; /* Use a clean font for better readability */
+    background-color: #f0f0f0; /* Light background color */
+}
+
+/* Heading styles */
+h1 {
+    text-align: center; /* Center the heading */
+    margin: 20px 0; /* Add margin above and below the heading */
+    color: #333; /* Darker text color for contrast */
+}
+
+/* Map container styles */
+#map {
+    height: 100vh; /* Full height of the viewport */
+    width: 100%; /* Full width of the container */
+    position: absolute; /* Positioning to cover entire screen */
+    top: 0; /* Align to the top of the viewport */
+    left: 0; /* Align to the left of the viewport */
+    z-index: -1; /* Ensure it stays behind other content if needed */
+}
+

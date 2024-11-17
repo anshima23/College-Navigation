@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import L from 'leaflet'; // Import Leaflet library
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import io from 'socket.io-client'; // Import Socket.IO client
-import "./track.css";
+import "./track.css"; // Import CSS for styling
 
 // Initialize socket connection
 const socket = io();
@@ -34,9 +34,10 @@ const Track = () => {
         // Initialize the map and center it on the user's location
         function initializeMap(latitude, longitude) {
             if (!map) {
-                map = L.map("map").setView([latitude, longitude], 16);
-                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{y}/{x}.png", {
-                    attribution: "OpenStreetMap"
+                map = L.map("map").setView([latitude, longitude], 16); // Set initial zoom level close to user
+                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                    attribution: "© OpenStreetMap contributors",
+                    maxZoom: 19,
                 }).addTo(map);
             }
 
@@ -46,6 +47,9 @@ const Track = () => {
             } else {
                 markers['self'].setLatLng([latitude, longitude]);
             }
+
+            // Set view to user's location (closer zoom)
+            map.setView([latitude, longitude], 16); // Adjust zoom level as needed
         }
 
         // Watch user's location and emit it to the server
@@ -98,9 +102,7 @@ const Track = () => {
 
     return (
         <div>
-            <h1>Real-Time Location Tracking</h1>
-            <div id="map" style={{ height: '100vh', width: '100%' }}></div>
-            <Link to="/">Back to Home</Link> {/* Link back to Home */}
+            <div id="map"></div> {/* The map will take full height and width */}
         </div>
     );
 };
