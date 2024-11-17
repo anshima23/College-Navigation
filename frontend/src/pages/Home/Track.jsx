@@ -1,11 +1,13 @@
 // src/pages/Track.jsx
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import L from 'leaflet'; // Import Leaflet library
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import io from 'socket.io-client'; // Import Socket.IO client
 import "./track.css"; // Import CSS for styling
+import userLocationIcon from "../../assets/loc.png";
+import otherUserIcon from "../../assets/loc-bl.png";
+
 
 // Initialize socket connection
 const socket = io();
@@ -13,14 +15,14 @@ const socket = io();
 const Track = () => {
     useEffect(() => {
         const blueIcon = L.icon({
-            iconUrl: '/images/loc.png', // Path to your user's location icon
-            iconSize: [25, 41],
+            iconUrl: userLocationIcon,// Path to your user's location icon
+            iconSize: [20, 20],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
         });
 
         const otherIcon = L.icon({
-            iconUrl: '/images/loc-bl.png', // Path to other users' icons
+            iconUrl: otherUserIcon,// Path to other users' icons
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
