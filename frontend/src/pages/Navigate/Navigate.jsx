@@ -12,10 +12,12 @@ import "./navigate.css"; // Import CSS for styling
 const socket = io();
 
 const Navigate = () => {
-    const [currentLocation, setCurrentLocation] = useState(''); // Display name of current location
-    const [destination, setDestination] = useState(''); // Display name of destination
+    const [currentLocation, setCurrentLocation] = useState(''); // Current location input
+    const [destination, setDestination] = useState(''); // Destination input
     const [map, setMap] = useState(null);
     const [routingControl, setRoutingControl] = useState(null);
+    const [currentMarker, setCurrentMarker] = useState(null); // Marker for current location
+    const [destinationMarker, setDestinationMarker] = useState(null); // Marker for destination
 
     useEffect(() => {
         // Initialize the map centered on AKGEC Ghaziabad
@@ -37,29 +39,6 @@ const Navigate = () => {
         mapInstance.setMaxBounds(bounds); // Set maximum bounds for the map
         mapInstance.fitBounds(bounds); // Optionally fit the map to these bounds
 
-        // Attempt to get the user's current location
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    const latLng = `${latitude}, ${longitude}`;
-                    setCurrentLocation(latLng); // Set current location state as coordinates
-                    mapInstance.setView([latitude, longitude], 16); // Center map on user's location
-
-                    // Add a marker for the user's current location
-                    L.marker([latitude, longitude]).addTo(mapInstance)
-                        .bindPopup("You are here")
-                        .openPopup();
-                },
-                (error) => {
-                    console.error("Geolocation error:", error);
-                    alert("Unable to retrieve your location. Please enter it manually.");
-                }
-            );
-        } else {
-            alert("Geolocation is not supported by this browser.");
-        }
-
         return () => {
             if (mapInstance) {
                 mapInstance.remove(); // Clean up on unmount
@@ -71,13 +50,13 @@ const Navigate = () => {
         if (routingControl) {
             routingControl.setWaypoints([
                 L.latLng(currentLocation.split(',')[0], currentLocation.split(',')[1]), 
-                L.latLng(destination)
+                L.latLng(destination.split(',')[0], destination.split(',')[1]) // Ensure correct parsing of destination
             ]);
         } else if (map) {
             const control = L.Routing.control({
                 waypoints: [
                     L.latLng(currentLocation.split(',')[0], currentLocation.split(',')[1]),
-                    L.latLng(destination)
+                    L.latLng(destination.split(',')[0], destination.split(',')[1]) // Ensure correct parsing of destination
                 ],
                 routeWhileDragging: true,
                 geocoder: L.Control.Geocoder.nominatim() // Use Nominatim for geocoding
@@ -95,13 +74,50 @@ const Navigate = () => {
             geocoder.geocode(inputValue, (results) => {
                 if (results.length > 0) {
                     const { lat, lon } = results[0].center; // Get latitude and longitude from results
-                    setCurrentLocation(`${lat}, ${lon}`); // Store as coordinates internally
-                    map.setView([lat, lon], 16); // Center map on new coordinates
+                    
+                    if (!currentMarker) {
+                        // Create a new marker for the current location if it doesn't exist
+                        const marker = L.marker([lat, lon]).addTo(map)
+                            .bindPopup("You are here")
+                            .openPopup();
+                        setCurrentMarker(marker);
+                    } else {
+                        // Move existing marker to new location
+                        currentMarker.setLatLng([lat, lon]);
+                    }
 
-                    // Optionally add a marker for the new location
-                    L.marker([lat, lon]).addTo(map)
-                        .bindPopup(inputValue)
-                        .openPopup();
+                    map.setView([lat, lon], 16); // Center map on new coordinates
+                } else {
+                    console.error("No results found for current location.");
+                }
+            });
+        }
+    };
+
+    const handleDestinationChange = async (e) => {
+        const inputValue = e.target.value;
+        setDestination(inputValue);
+
+        if (inputValue) {
+            const geocoder = L.Control.Geocoder.nominatim();
+            geocoder.geocode(inputValue, (results) => {
+                if (results.length > 0) {
+                    const { lat, lon } = results[0].center; // Get latitude and longitude from results
+                    
+                    if (!destinationMarker) {
+                        // Create a new marker for the destination if it doesn't exist
+                        const marker = L.marker([lat, lon]).addTo(map)
+                            .bindPopup("Destination")
+                            .openPopup();
+                        setDestinationMarker(marker);
+                    } else {
+                        // Move existing marker to new location
+                        destinationMarker.setLatLng([lat, lon]);
+                    }
+
+                    map.setView([lat, lon], 16); // Center map on new coordinates
+                } else {
+                    console.error("No results found for destination.");
                 }
             });
         }
@@ -110,7 +126,7 @@ const Navigate = () => {
     return (
         <div>
             <h1>Campus Navigation</h1>
-            <div>
+            <div className="input-container">
                 <input 
                     type="text" 
                     placeholder="Enter Current Location" 
@@ -121,7 +137,7 @@ const Navigate = () => {
                     type="text" 
                     placeholder="Enter Destination" 
                     value={destination} 
-                    onChange={(e) => setDestination(e.target.value)} 
+                    onChange={handleDestinationChange} 
                 />
                 <button onClick={findRoute}>Find Route</button>
             </div>

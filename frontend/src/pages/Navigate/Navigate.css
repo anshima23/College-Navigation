@@ -3,6 +3,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light background color for contrast */
 }
 
 .navigate-container {
@@ -13,12 +14,16 @@ body {
 
 h1 {
     text-align: center;
+    margin: 20px 0; /* Add margin for spacing */
+    color: #343a40; /* Darker text color */
 }
 
 .input-container {
     display: flex;
     align-items: center;
+    justify-content: flex-end; /* Align items to the right */
     margin-bottom: 20px;
+    padding-right: 20px; /* Add some padding to the right */
 }
 
 input {
@@ -27,13 +32,28 @@ input {
     flex-grow: 1; /* Allow inputs to grow */
     border-radius: 4px;
     border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Add shadow for depth */
+}
+
+input:focus {
+    border-color: #007BFF; /* Change border color on focus */
+    outline: none; /* Remove default outline */
 }
 
 button {
-    padding: 10px;
-    background-color: #007BFF;
+    padding: 10px 15px; /* Add horizontal padding for button */
+    background-color: #007BFF; /* Primary button color */
     color: #fff;
     border-radius: 4px;
     border: none;
     cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Add shadow for depth */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+button:focus {
+    outline: none; /* Remove default outline on focus */
 }
