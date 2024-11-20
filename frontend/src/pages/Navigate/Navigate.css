@@ -77,16 +77,21 @@ input {
     overflow-y: auto; /* Enable scrolling */
     position: absolute; /* Position below input */
     top: calc(100% + 2px); /* Position it just below the input box */
-    left: 0; /* Align with left of input */
-    width: 30%; /* Match input width */
+    right: 0; /* Align it to the right side of the input box */
+    width: 25%; /* Set width of the suggestion box */
     z-index: 1000; /* Ensure it appears above other elements */
+    border-radius: 4px; /* Add rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
 }
 
 .suggestions li {
-    padding: 8px;
+    padding: 8px 12px; /* Add padding for a cleaner look */
     cursor: pointer;
+    font-size: 14px; /* Slightly smaller font size */
+    color: #343a40; /* Darker text color for better visibility */
 }
 
 .suggestions li:hover {
-    background-color: #f0f0f0; /* Highlight effect */
+    background-color: #007BFF; /* Highlight color on hover */
+    color: #fff; /* White text on hover */
 }
