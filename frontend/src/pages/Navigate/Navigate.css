@@ -57,3 +57,21 @@ button:hover {
 button:focus {
     outline: none; /* Remove default outline on focus */
 }
+
+.suggestions {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.suggestions li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestions li:hover {
+    background-color: #f0f0f0; /* Highlight effect */
+}
