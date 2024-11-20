@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import L from 'leaflet'; // Import Leaflet library
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import 'leaflet-routing-machine'; // Import Leaflet Routing Machine
-import 'leaflet-control-geocoder'; // Import Leaflet Control Geocoder
 import io from 'socket.io-client'; // Import Socket.IO client
 import "./navigate.css"; // Import CSS for styling
 
@@ -49,77 +48,73 @@ const Navigate = () => {
     const findRoute = () => {
         if (routingControl) {
             routingControl.setWaypoints([
-                L.latLng(currentLocation.split(',')[0], currentLocation.split(',')[1]), 
-                L.latLng(destination.split(',')[0], destination.split(',')[1]) // Ensure correct parsing of destination
-            ]);
+                currentMarker ? currentMarker.getLatLng() : null,
+                destinationMarker ? destinationMarker.getLatLng() : null,
+            ].filter(Boolean)); // Filter out any null values
         } else if (map) {
             const control = L.Routing.control({
                 waypoints: [
-                    L.latLng(currentLocation.split(',')[0], currentLocation.split(',')[1]),
-                    L.latLng(destination.split(',')[0], destination.split(',')[1]) // Ensure correct parsing of destination
-                ],
+                    currentMarker ? currentMarker.getLatLng() : null,
+                    destinationMarker ? destinationMarker.getLatLng() : null,
+                ].filter(Boolean), // Filter out any null values
                 routeWhileDragging: true,
-                geocoder: L.Control.Geocoder.nominatim() // Use Nominatim for geocoding
+                serviceUrl: 'https://router.project-osrm.org/route/v1' // Use a valid routing server URL
             }).addTo(map);
+
+            control.on('routingerror', function(e) {
+                console.error("Routing error:", e);
+                alert("Failed to find a route.");
+            });
+
             setRoutingControl(control);
         }
     };
 
-    const handleCurrentLocationChange = async (e) => {
-        const inputValue = e.target.value;
-        setCurrentLocation(inputValue);
-
+    const handleLocationChange = async (inputValue, isCurrentLocation) => {
+        console.log(`Fetching coordinates for: ${inputValue}`); // Log input value
         if (inputValue) {
-            const geocoder = L.Control.Geocoder.nominatim();
-            geocoder.geocode(inputValue, (results) => {
-                if (results.length > 0) {
-                    const { lat, lon } = results[0].center; // Get latitude and longitude from results
-                    
-                    if (!currentMarker) {
-                        // Create a new marker for the current location if it doesn't exist
-                        const marker = L.marker([lat, lon]).addTo(map)
-                            .bindPopup("You are here")
-                            .openPopup();
-                        setCurrentMarker(marker);
-                    } else {
-                        // Move existing marker to new location
-                        currentMarker.setLatLng([lat, lon]);
-                    }
+            const geocoderUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(inputValue)}&format=json`;
 
-                    map.setView([lat, lon], 16); // Center map on new coordinates
-                } else {
-                    console.error("No results found for current location.");
+            try {
+                const response = await fetch(geocoderUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            });
-        }
-    };
+                const data = await response.json();
+                console.log("Geocoding results:", data); // Log results for debugging
+                
+                if (data.length > 0) {
+                    const { lat, lon } = data[0]; // Get latitude and longitude from results
 
-    const handleDestinationChange = async (e) => {
-        const inputValue = e.target.value;
-        setDestination(inputValue);
-
-        if (inputValue) {
-            const geocoder = L.Control.Geocoder.nominatim();
-            geocoder.geocode(inputValue, (results) => {
-                if (results.length > 0) {
-                    const { lat, lon } = results[0].center; // Get latitude and longitude from results
-                    
-                    if (!destinationMarker) {
-                        // Create a new marker for the destination if it doesn't exist
-                        const marker = L.marker([lat, lon]).addTo(map)
-                            .bindPopup("Destination")
-                            .openPopup();
-                        setDestinationMarker(marker);
+                    if (isCurrentLocation) {
+                        if (!currentMarker) {
+                            const marker = L.marker([lat, lon]).addTo(map)
+                                .bindPopup("You are here")
+                                .openPopup();
+                            setCurrentMarker(marker);
+                        } else {
+                            currentMarker.setLatLng([lat, lon]);
+                        }
+                        setCurrentLocation(inputValue); // Update state with user input
+                        map.setView([lat, lon], 16); // Center map on new coordinates
                     } else {
-                        // Move existing marker to new location
-                        destinationMarker.setLatLng([lat, lon]);
+                        if (!destinationMarker) {
+                            const marker = L.marker([lat, lon]).addTo(map)
+                                .bindPopup("Destination")
+                                .openPopup();
+                            setDestinationMarker(marker);
+                        } else {
+                            destinationMarker.setLatLng([lat, lon]);
+                        }
+                        setDestination(inputValue); // Update state with user input
+                        map.setView([lat, lon], 16); // Center map on new coordinates
                     }
-
-                    map.setView([lat, lon], 16); // Center map on new coordinates
                 } else {
-                    console.error("No results found for destination.");
+                    console.error("No results found.");
                 }
-            });
+            } catch (error) {
+                console.error("Error fetching geocoding data:", error);
+            }
         }
     };
 
@@ -131,13 +126,15 @@ const Navigate = () => {
                     type="text" 
                     placeholder="Enter Current Location" 
                     value={currentLocation} 
-                    onChange={handleCurrentLocationChange} 
+                    onChange={(e) => setCurrentLocation(e.target.value)} 
+                    onBlur={() => handleLocationChange(currentLocation, true)} 
                 />
                 <input 
                     type="text" 
                     placeholder="Enter Destination" 
                     value={destination} 
-                    onChange={handleDestinationChange} 
+                    onChange={(e) => setDestination(e.target.value)} 
+                    onBlur={() => handleLocationChange(destination, false)} 
                 />
                 <button onClick={findRoute}>Find Route</button>
             </div>
