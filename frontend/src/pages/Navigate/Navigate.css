@@ -58,13 +58,28 @@ button:focus {
     outline: none; /* Remove default outline on focus */
 }
 
+.input-container {
+    position: relative; /* Ensure positioning context for suggestions */
+}
+
+input {
+    width: 100%; /* Ensure input takes full width */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
 .suggestions {
     list-style-type: none;
     padding: 0;
     margin: 0;
     border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
+    background-color: white;
+    max-height: 150px; /* Limit height */
+    overflow-y: auto; /* Enable scrolling */
+    position: absolute; /* Position below input */
+    top: calc(100% + 2px); /* Position it just below the input box */
+    left: 0; /* Align with left of input */
+    width: 30%; /* Match input width */
+    z-index: 1000; /* Ensure it appears above other elements */
 }
 
 .suggestions li {

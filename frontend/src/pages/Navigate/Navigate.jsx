@@ -108,7 +108,7 @@ const Navigate = () => {
 
     const selectSuggestion = (location, isCurrentLocation) => {
         const { lat, lon } = location;
-        
+
         if (isCurrentLocation) {
             if (!currentMarker) {
                 const marker = L.marker([lat, lon]).addTo(map)
@@ -134,7 +134,7 @@ const Navigate = () => {
             map.setView([lat, lon], 16);
             setDestinationSuggestions([]); // Clear suggestions after selection
         }
-        
+
         findRoute();  // Call findRoute after selecting a suggestion to update the route
     };
 
