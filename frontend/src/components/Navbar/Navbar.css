@@ -1,13 +1,21 @@
 /* src/pages/Navbar/navbar.css */
 
 .navbar {
-  background-color: #333; /* Navbar background color */
-  color: #fff; /* Text color */
-  padding: 5px 20px; /* Reduced padding for a compact navbar */
-  display: flex; /* Align logo and menu items horizontally */
+  background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  color: #333; /* Adjust text color for contrast */
+  padding: 5px 20px; /* Compact padding */
+  display: flex; /* Align items horizontally */
   align-items: center; /* Center items vertically */
-  height: 60px; /* Set a fixed height for the navbar */
+  height: 60px; /* Fixed navbar height */
+  position: fixed; /* Make navbar fixed */
+  top: 0; /* Align it to the top of the viewport */
+  width: 100%; /* Full width */
+  z-index: 1000; /* Ensure it stays on top of other elements */
 }
+
+
 
 .navbar img.college-logo {
   height: 40px; /* Set a small height for the logo */
@@ -29,7 +37,7 @@
 }
 
 .navbar a {
-  color: #fff; /* Link text color */
+  color: black; /* Link text color */
   text-decoration: none; /* Remove underline */
   font-size: 16px; /* Set font size for menu items */
 }

@@ -1,5 +1,3 @@
-// src/pages/Home/Navigate.jsx
-
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -21,10 +19,7 @@ const Navigate = () => {
 
   useEffect(() => {
     // Initialize map
-    const mapInstance = L.map("map").setView(
-      [28.67573005328916, 77.50249762213528],
-      16
-    );
+    const mapInstance = L.map("map").setView([28.67573005328916, 77.50249762213528], 16);
 
     // Add tile layer
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -33,10 +28,7 @@ const Navigate = () => {
     }).addTo(mapInstance);
 
     // Set bounds
-    const bounds = L.latLngBounds([
-      [28.672, 77.497],
-      [28.678, 77.507],
-    ]);
+    const bounds = L.latLngBounds([[28.672, 77.497], [28.678, 77.507]]);
     mapInstance.setMaxBounds(bounds);
     mapInstance.fitBounds(bounds);
 
@@ -55,9 +47,7 @@ const Navigate = () => {
       return;
     }
 
-    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-      inputValue
-    )}&format=json&addressdetails=1&limit=5`;
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(inputValue)}&format=json&addressdetails=1&limit=5`;
 
     try {
       const response = await fetch(url);
@@ -88,9 +78,7 @@ const Navigate = () => {
         .bindPopup(popupText)
         .openPopup();
 
-      isCurrentLocation
-        ? setCurrentMarker(newMarker)
-        : setDestinationMarker(newMarker);
+      isCurrentLocation ? setCurrentMarker(newMarker) : setDestinationMarker(newMarker);
     } else {
       marker.setLatLng([lat, lon]);
     }
@@ -109,29 +97,44 @@ const Navigate = () => {
   };
 
   const findRoute = () => {
-    if (!map || (!currentMarker && !destinationMarker)) return;
+    if (!map || !currentMarker || !destinationMarker) {
+      console.error("Markers not set properly.");
+      return;
+    }
 
-    const waypoints = [
-      currentMarker?.getLatLng(),
-      destinationMarker?.getLatLng(),
-    ].filter(Boolean);
+    const startLatLng = currentMarker.getLatLng();
+    const endLatLng = destinationMarker.getLatLng();
 
     if (routingControl) {
-      routingControl.setWaypoints(waypoints);
-    } else {
-      const control = L.Routing.control({
-        waypoints,
-        routeWhileDragging: true,
-        serviceUrl: "https://router.project-osrm.org/route/v1",
-      })
-        .on("routingerror", (e) => {
-          console.error("Routing error:", e);
-          alert("Failed to find a route.");
-        })
-        .addTo(map);
-
-      setRoutingControl(control);
+      map.removeControl(routingControl); // Remove the previous route, if any
     }
+
+    // Add the routing control to the map
+    const newRoutingControl = L.Routing.control({
+      waypoints: [L.latLng(startLatLng), L.latLng(endLatLng)],
+      routeWhileDragging: true,
+      lineOptions: {
+        styles: [{ color: "blue", weight: 5 }], // Style of the route line
+      },
+      createMarker: (i, waypoint) => {
+        return L.marker(waypoint.latLng, {
+          draggable: true,
+        });
+      },
+      show: true, // Enable route instructions
+    })
+      .on("routesfound", (e) => {
+        const routes = e.routes;
+        console.log("Routes found:", routes);
+        if (routes.length > 0) {
+          const route = routes[0];
+          console.log("Full route summary:", route.summary);
+          console.log("Route instructions:", route.instructions);
+        }
+      })
+      .addTo(map);
+
+    setRoutingControl(newRoutingControl); // Save the routing control to state
   };
 
   return (

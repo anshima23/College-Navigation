@@ -10,11 +10,12 @@
     align-items: center;
 }
 
-/* Hero Image */
 .college-image {
-    width: 100%;
-    height: auto;
+    width: 100%; /* Keep the image full width */
+    height: 700px; /* Set a fixed height (adjust as needed) */
+    object-fit: cover; /* Ensure the image fits well without distortion */
 }
+
 
 /* Hero Button (Half Inside, Half Outside Image) */
 .hero-button {

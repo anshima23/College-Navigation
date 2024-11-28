@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 import React from "react";
 import { Link } from 'react-router-dom';
-import collegeImage from "../../assets/collegen1.jpeg";
+import collegeImage from "../../assets/im.webp";
 import campus from "../../assets/campus.png";
 import faculty from "../../assets/faculty.png";
 import location from "../../assets/location.png";
