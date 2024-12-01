@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import im1 from "../../assets/im1.png";
 import im2 from "../../assets/im2.webp";
 import im3 from "../../assets/im3.png";
-import campus from "../../assets/campus.png";
+import acad from "../../assets/acad.jpg";
+import eventt from "../../assets/eventt.jpg";
+import campus from "../../assets/campus.jpg";
+import fac from "../../assets/fac.jpg";
+import even from "../../assets/even.jpg";
+import loc from "../../assets/loc.jpg";
 import boxim1 from "../../assets/boxim1.jpg";
 import boxim2 from "../../assets/boxim2.jpg";
 import boxim3 from "../../assets/boxim3.jpg";
@@ -14,41 +19,35 @@ import Footer from "../../Components/Footer/footer";
 import "./home.css";
 
 const Home = () => {
-  const images = [im1, im2, im3];
+  const heroImages = [im1, im2, im3];
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
 
+  // Carousel Section Data
+  const carouselData = [
+    { image: acad, text: "Academic Excellence Unveiled" },
+    { image: eventt, text: "Engaging Events Await" },
+  ];
+  const [carouselIndex, setCarouselIndex] = useState(0);
+
+  // Text Animation for Hero Section
   const textSequence = [
     "Navigate campus seamlessly",
     "Discover faculty and facilities",
   ];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [textIndex, setTextIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const carouselData = [
-    {
-      image: im1,
-      text: "Explore your academic journey with ease and efficiency.",
-    },
-    {
-      image: im2,
-      text: "Stay informed about upcoming events and resources.",
-    },
-  ];
-  const [carouselIndex, setCarouselIndex] = useState(0);
-
-  const handleCarouselChange = (index) => {
-    setCarouselIndex(index);
-  };
-
+  // Hero Section Image Carousel
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentHeroIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
     }, 3300);
 
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [heroImages.length]);
 
+  // Typing Effect for Hero Section
   useEffect(() => {
     const handleTyping = () => {
       const currentSentence = textSequence[textIndex];
@@ -75,13 +74,19 @@ const Home = () => {
     return () => clearInterval(typingInterval);
   }, [currentText, isDeleting, textSequence, textIndex]);
 
+  // Carousel Section Change
+  const handleCarouselChange = (index) => {
+    setCarouselIndex(index);
+  };
+
+
   return (
     <div>
       {/* Hero Section */}
       <div className="hero-container">
         <img
-          src={images[currentImageIndex]}
-          alt={`Slide ${currentImageIndex + 1}`}
+          src={heroImages[currentHeroIndex]}
+          alt={`Slide ${currentHeroIndex + 1}`}
           className="college-image"
         />
         <div className="text-overlay">{currentText}</div>
@@ -111,7 +116,7 @@ const Home = () => {
           </div>
           <div className="box">
             <div className="circle-image-container">
-              <img src={faculty} alt="College Faculty" className="box-image" />
+              <img src={fac} alt="College Faculty" className="box-image" />
             </div>
             <Link to="/college-faculty" className="box-heading">
               Faculty
@@ -125,7 +130,7 @@ const Home = () => {
           </div>
           <div className="box">
             <div className="circle-image-container">
-              <img src={location} alt="Track my location" className="box-image" />
+              <img src={loc} alt="Track my location" className="box-image" />
             </div>
             <Link to="/track" className="box-heading">
               Track My Location
@@ -138,7 +143,7 @@ const Home = () => {
           </div>
           <div className="box">
             <div className="circle-image-container">
-              <img src={event} alt="Events Scheduled" className="box-image" />
+              <img src={even} alt="Events Scheduled" className="box-image" />
             </div>
             <Link to="/events-scheduled" className="box-heading">
               Event Scheduled
@@ -153,7 +158,7 @@ const Home = () => {
       </div>
 
         {/* Carousel Section */}
-        <div className="carousel-container">
+      <div className="carousel-container">
         <div className="carousel-box">
           <div className="carousel-image-container">
             <img
