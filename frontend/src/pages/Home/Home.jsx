@@ -56,16 +56,12 @@ const Home = () => {
     const handleTyping = () => {
       const currentSentence = textSequence[textIndex];
       if (!isDeleting) {
-        setCurrentText((prev) =>
-          currentSentence.substring(0, prev.length + 1)
-        );
+        setCurrentText((prev) => currentSentence.substring(0, prev.length + 1));
         if (currentText === currentSentence) {
           setTimeout(() => setIsDeleting(true), 1000);
         }
       } else {
-        setCurrentText((prev) =>
-          currentSentence.substring(0, prev.length - 1)
-        );
+        setCurrentText((prev) => currentSentence.substring(0, prev.length - 1));
         if (currentText === "") {
           setIsDeleting(false);
           setTextIndex((prev) => (prev + 1) % textSequence.length);
@@ -83,7 +79,6 @@ const Home = () => {
     setCarouselIndex(index);
   };
 
-
   return (
     <div>
       {/* Hero Section */}
@@ -99,8 +94,6 @@ const Home = () => {
         </Link>
       </div>
 
-    
-
       {/* Body Section */}
       <div className="body-section">
         <div className="box-row">
@@ -112,10 +105,9 @@ const Home = () => {
               College Campus
             </Link>
             <p className="box-description">
-              Discover the various facilities available on campus, including
-              libraries, laboratories, and recreational areas. Navigate through
-              our beautiful grounds and find the resources that enhance your
-              academic journey.
+              Discover our vibrant campus, where state-of-the-art facilities and
+              lush green spaces await you. Explore the campus map to find
+              libraries, labs, and recreational areas.
             </p>
           </div>
           <div className="box">
@@ -126,10 +118,9 @@ const Home = () => {
               Faculty
             </Link>
             <p className="box-description">
-              Our dedicated faculty members are here to guide you through your
-              educational experience. With diverse expertise and a passion for
-              teaching, they are committed to your success both inside and
-              outside the classroom.
+              Meet our dedicated faculty members who bring years of expertise
+              and passion to the classroom. They are committed to providing you
+              with a rich and rewarding academic experience.
             </p>
           </div>
           <div className="box">
@@ -140,9 +131,8 @@ const Home = () => {
               Track My Location
             </Link>
             <p className="box-description">
-              Use our mobile app to easily track your location on campus
-              in real-time. Find the quickest routes to your classes, events,
-              and essential facilities with just a few taps.
+              Use our mobile app to easily track your location on campus in
+              real-time, ensuring you never miss a class or event again.
             </p>
           </div>
           <div className="box">
@@ -153,15 +143,14 @@ const Home = () => {
               Event Scheduled
             </Link>
             <p className="box-description">
-              Stay informed about all upcoming events, workshops, and activities
-              happening on campus. Join us for enriching experiences that foster
-              community engagement and personal growth.
+              Stay up to date with all the exciting events happening on campus.
+              From workshops to cultural fests, never miss out on the action.
             </p>
           </div>
         </div>
       </div>
 
-        {/* Carousel Section */}
+      {/* Carousel Section */}
       <div className="carousel-container">
         <div className="carousel-box">
           <div className="carousel-image-container">
@@ -188,87 +177,127 @@ const Home = () => {
 
       {/* Second Body Section */}
       <div className="body-section-hover">
-  <div className="box-row">
-    <div className="box">
-      <div className="circle-image-container hover-container">
-        <img src={one} alt="Explore Campus" className="box-image hover-image" />
-        <div className="hover-overlay">
-          <p>Explore Campus</p>
+        <div className="box-row">
+          <div className="box">
+            <div className="circle-image-container hover-container">
+              <img
+                src={one}
+                alt="Explore Campus"
+                className="box-image hover-image"
+              />
+              <div className="hover-overlay">
+                <p>
+                  Our college emphasizes academic excellence with a focus on
+                  innovative teaching methods. We offer diverse programs that
+                  cater to various fields of study, ensuring a comprehensive
+                  education. Our experienced faculty and modern facilities help
+                  students achieve their academic and professional goals.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="box">
+            <div className="circle-image-container hover-container">
+              <img
+                src={two}
+                alt="College Faculty"
+                className="box-image hover-image"
+              />
+              <div className="hover-overlay">
+                <p>
+                  Our college promotes a strong sports culture, offering a wide
+                  range of activities for all skill levels. With
+                  state-of-the-art facilities and dedicated coaching, students
+                  have the opportunity to excel in various sports. We actively
+                  participate in regional and national tournaments, fostering
+                  teamwork and discipline.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="box">
+            <div className="circle-image-container hover-container">
+              <img
+                src={three}
+                alt="Track my location"
+                className="box-image hover-image"
+              />
+              <div className="hover-overlay">
+                <p>
+                  Our college has consistently ranked among the top institutions
+                  in the region, with numerous awards in academic and
+                  extracurricular fields. We take pride in our students'
+                  achievements in national competitions, sports, and research.
+                  Our alumni have made notable contributions in various
+                  industries globally, reflecting the college's legacy of
+                  excellence.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="box">
+            <div className="circle-image-container hover-container">
+              <img
+                src={four}
+                alt="Events Scheduled"
+                className="box-image hover-image"
+              />
+              <div className="hover-overlay">
+                <p>
+                  The college offers a rigorous academic curriculum designed to
+                  provide a strong foundation in both theory and practical
+                  knowledge. Students are encouraged to engage in research,
+                  internships, and projects to enhance their learning
+                  experience. Our dedicated faculty members ensure personalized
+                  attention to help students achieve their academic goals.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div className="box">
-      <div className="circle-image-container hover-container">
-        <img src={two} alt="College Faculty" className="box-image hover-image" />
-        <div className="hover-overlay">
-          <p>Meet Our Faculty</p>
-        </div>
-      </div>
-    </div>
-    <div className="box">
-      <div className="circle-image-container hover-container">
-        <img src={three} alt="Track my location" className="box-image hover-image" />
-        <div className="hover-overlay">
-          <p>Track Your Location</p>
-        </div>
-      </div>
-    </div>
-    <div className="box">
-      <div className="circle-image-container hover-container">
-        <img src={four} alt="Events Scheduled" className="box-image hover-image" />
-        <div className="hover-overlay">
-          <p>Upcoming Events</p>
-        </div>
-      </div>
-    </div>
-  </div>
-      </div>
 
-    <div className="head">Heading</div>
-
-
-
+     {/* Full-Width Grid Section */}
 <div className="full-width-grid">
   {Array.from({ length: 6 }, (_, index) => {
     let content;
-
-    // Assign images to the correct boxes
+    let heading;
+    
+    // Define content and heading for the non-image boxes
     if (index === 0) {
-      content = <img src={boxim1} alt={`Box ${index + 1}`} />; // 1st row, 1st column
+      content = <img src={boxim1} alt={`Box ${index + 1}`} />;
     } else if (index === 3) {
-      content = <img src={boxim2} alt={`Box ${index + 1}`} />; // 2nd row, 1st column
+      content = <img src={boxim2} alt={`Box ${index + 1}`} />;
     } else if (index === 4) {
-      content = <img src={boxim3} alt={`Box ${index + 1}`} />; // 3rd row, 2nd column
+      content = <img src={boxim3} alt={`Box ${index + 1}`} />;
     } else {
-      content = `Text Box ${index + 1}`; // Other boxes will contain text
+      heading = `Heading for Text Box ${index + 1}`;
+      content = `Content for Text Box ${index + 1}`;
     }
 
-    // Apply custom class based on the index and the content
     let className;
-    if (content === "Text Box 3") {
-      className = "grid-box red";  // Text Box 3 (red background)
-    } else if (content === "Text Box 6") {
-      className = "grid-box grey"; // Text Box 6 (grey background)
-    } else if (index === 1 || index === 4) {
-      className = "grid-box grey";  // 1st row, 2nd column and 3rd row, 2nd column (grey)
-    } else if (index === 3) {
-      className = "grid-box red";   // 2nd row, 1st column (red)
-    } else {
-      className = "grid-box image"; // Default class for other boxes
-    }
+    // Assign specific styles based on the content type
+    if (content === "Content for Text Box 3") className = "grid-box red";
+    else if (content === "Content for Text Box 6") className = "grid-box grey";
+    else if (index === 1 || index === 4) className = "grid-box grey";
+    else if (index === 3) className = "grid-box red";
+    else className = "grid-box image";
 
     return (
       <div key={index} className={className}>
-        {content}
+        {/* Render heading and content only for text boxes */}
+        {heading && (
+          <>
+            <h3>{heading}</h3>
+            <p>{content}</p>
+          </>
+        )}
+        {/* Render image for image boxes */}
+        {!heading && content}
       </div>
     );
   })}
 </div>
-
-
-
-
-
 
 
       <Footer />
