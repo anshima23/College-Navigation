@@ -6,6 +6,10 @@ import im3 from "../../assets/im3.png";
 import acad from "../../assets/acad.jpg";
 import eventt from "../../assets/eventt.jpg";
 import campus from "../../assets/campus.jpg";
+import one from "../../assets/one.jpg";
+import two from "../../assets/two.jpg";
+import three from "../../assets/three.jpg";
+import four from "../../assets/four.jpg";
 import fac from "../../assets/fac.jpg";
 import even from "../../assets/even.jpg";
 import loc from "../../assets/loc.jpg";
@@ -187,7 +191,7 @@ const Home = () => {
   <div className="box-row">
     <div className="box">
       <div className="circle-image-container hover-container">
-        <img src={campus} alt="Explore Campus" className="box-image hover-image" />
+        <img src={one} alt="Explore Campus" className="box-image hover-image" />
         <div className="hover-overlay">
           <p>Explore Campus</p>
         </div>
@@ -195,7 +199,7 @@ const Home = () => {
     </div>
     <div className="box">
       <div className="circle-image-container hover-container">
-        <img src={faculty} alt="College Faculty" className="box-image hover-image" />
+        <img src={two} alt="College Faculty" className="box-image hover-image" />
         <div className="hover-overlay">
           <p>Meet Our Faculty</p>
         </div>
@@ -203,7 +207,7 @@ const Home = () => {
     </div>
     <div className="box">
       <div className="circle-image-container hover-container">
-        <img src={location} alt="Track my location" className="box-image hover-image" />
+        <img src={three} alt="Track my location" className="box-image hover-image" />
         <div className="hover-overlay">
           <p>Track Your Location</p>
         </div>
@@ -211,7 +215,7 @@ const Home = () => {
     </div>
     <div className="box">
       <div className="circle-image-container hover-container">
-        <img src={event} alt="Events Scheduled" className="box-image hover-image" />
+        <img src={four} alt="Events Scheduled" className="box-image hover-image" />
         <div className="hover-overlay">
           <p>Upcoming Events</p>
         </div>
