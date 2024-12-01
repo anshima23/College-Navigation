@@ -49,6 +49,254 @@
     text-align: center;
 }
 
+/* Main Photo Styling */
+.main-photo {
+    width: 100%; /* Full width of the screen */
+    height: 70vh; /* Half the screen's height */
+    overflow: hidden; /* Prevents overflow of the image outside the container */
+    margin-bottom: 20px; /* Space below the photo */
+    position: relative; /* For any absolute positioning within the image */
+}
+
+.main-photo img {
+    width: 100%; /* Ensure the image stretches across the full width */
+    height: 100%; /* Ensure the image covers the full height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+/* Info Section Styling */
+.info-section {
+    background-color: #e6dfdf; /* White background */
+    height: 30vh;
+    padding: 40px 20px; /* Space inside the section */
+    text-align: center; /* Center align content */
+    color: #333; /* Neutral text color */
+}
+
+.info-heading {
+    font-size: 4em; /* Larger font for heading */
+    margin-bottom: 20px; /* Space below heading */
+    font-weight: bold;
+    text-transform: uppercase; /* Optional: make heading uppercase */
+}
+
+.info-content {
+    font-size: 1.5em; /* Slightly larger font for content */
+    line-height: 1.6; /* Improve readability with line height */
+    max-width: 1300px; /* Limit content width for better readability */
+    margin: 0 auto; /* Center content block */
+    color: #555; /* Subtle text color */
+}
+
+/* Split Section Styling */
+.split-section {
+    margin-top: 3%;
+    display: flex;
+    align-items: center; /* Vertically center-align content */
+    justify-content: space-between; /* Space out text and image */
+    background-color: #f9f9f9; /* Light background color */
+    padding: 40px; /* Add padding around the section */
+    gap: 20px; /* Add spacing between text and image */
+}
+
+/* Text Block Styling */
+.text-block {
+    flex: 1; /* Text block occupies 1/4th of the section */
+    max-width: 25%; /* Restrict text block width to 1/4th of the section */
+    color: #333;
+}
+
+.text-block h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.text-block p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+/* Image Block Styling */
+.image-block {
+    flex: 3; /* Image block occupies the remaining space */
+    text-align: right; /* Align image to the right */
+}
+
+.image-block img {
+    width: 100%; /* Image takes up available space */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+}
+
+
+/* Numbered Section Styling */
+.numbered-section {
+    display: flex;
+    justify-content: space-between; /* Spread the cards evenly */
+    align-items: flex-start; /* Align cards at the top */
+    background-color: #f5f1f1; /* Light background for contrast */
+    padding: 40px 20px;
+    gap: 20px; /* Space between cards */
+    position: relative; /* Ensure the layout remains consistent */
+}
+
+/* Card Styling */
+.numbered-card {
+    flex: 1; /* Allow cards to grow equally */
+    text-align: center; /* Center-align content inside the card */
+    padding: 20px;
+    border-radius: 12px;
+    position: relative;
+}
+
+/* Vertical Divider */
+.numbered-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background-color: #ccc; /* Light gray for the divider line */
+    transform: translateX(50%); /* Center the line in the gap */
+}
+
+/* Number Styling */
+.card-number {
+    font-size: 5.5em; /* Large font for number */
+    color: #007bff; /* Accent color for the number */
+    margin-bottom: 10px;
+}
+
+/* Heading Styling */
+.card-heading {
+    font-size: 1.5em; /* Slightly larger font for heading */
+    color: #333; /* Neutral text color */
+    margin-bottom: 10px;
+}
+
+/* Content Paragraph Styling */
+.card-content {
+    font-size: 1em;
+    color: #555; /* Subtle text color */
+    line-height: 1.5; /* Improve readability */
+    margin: 0 auto;
+    max-width: 80%; /* Restrict paragraph width */
+}
+
+/* Image and Text Section Styling */
+.image-text-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space between image and text */
+    background-color: #f5f5f5; /* Light background for contrast */
+    padding: 40px 20px;
+    gap: 20px; /* Gap between image and text */
+}
+
+/* Image Container */
+.image-container {
+    flex: 3; /* Image takes 3/4 of the space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    width: 100%; /* Full width for responsive design */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for better presentation */
+}
+
+/* Text Container */
+.text-container {
+    flex: 1; /* Text takes 1/4 of the space */
+    padding: 20px;
+    text-align: left; /* Align text to the left */
+    color: #333; /* Neutral text color */
+}
+
+.text-container h3 {
+    font-size: 1.8em; /* Slightly larger heading font */
+    margin-bottom: 15px;
+    color: #101111; /* Accent color for heading */
+}
+
+.text-container p {
+    font-size: 1em;
+    line-height: 1.6; /* Improve readability */
+    color: #555; /* Subtle text color */
+}
+
+/* Quick Links Section Styling */
+.quick-links-section {
+    background-color: #b7b2b2; /* White background for contrast */
+    padding: 20px 20px;
+}
+
+.quick-links-row {
+    display: flex;
+    align-items: center; /* Align items (heading and divs) vertically */
+    gap: 80px; /* Space between heading and container */
+}
+
+/* Quick Links Heading */
+.quick-links-heading {
+    flex-shrink: 0; /* Prevent the heading from shrinking */
+    margin-left: 8%;
+    font-size: 1.2em; /* Adjusted size for better alignment */
+    color: #fdfbfb; /* Neutral text color */
+    margin: 0; /* Remove default margin */
+    white-space: nowrap; /* Prevent the text from wrapping */
+}
+
+/* Quick Links Container */
+.quick-links-container {
+    display: flex;
+    justify-content: space-between; /* Space out the cards evenly */
+    gap: 20px; /* Space between cards */
+    flex-grow: 1; /* Allow the container to fill remaining space */
+}
+
+/* Individual Quick Link Card */
+.quick-link-card {
+    flex: 1; /* Allow cards to grow equally */
+    padding: 40px;
+    border: 2px solid #f8fafd; /* Blue border */
+    text-align: center; /* Center-align content inside the card */
+    transition: transform 0.3s, box-shadow 0.3s; /* Add hover effect */
+}
+
+.quick-link-card h3 {
+    font-size: 1.8em; /* Slightly larger font for heading */
+    color: #f0f4f8; /* Accent color for heading */
+    margin: 0;
+}
+
+/* Hover Effect for Cards */
+.quick-link-card:hover {
+    transform: translateY(-5px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quick-links-row {
+        flex-direction: column; /* Stack heading and cards vertically */
+    }
+
+    .quick-links-container {
+        flex-direction: column; /* Stack cards vertically */
+        gap: 15px;
+    }
+}
+
+
+
+
 /* Know More Button Styling */
 .know-more-button {
     background-color: grey; /* Primary button color */

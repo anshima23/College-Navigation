@@ -10,6 +10,13 @@ import Navigate from './pages/Navigate/Navigate';
 import EventDetail from './pages/Events/EventDetail';
 import Track from './pages/Home/Track';
 import BuildingDetails from './pages/CampusMap/BuildingDetails';
+import ThriveCampus from './pages/CampusMap/thrive-campus';
+import SportsFacilities from './pages/CampusMap/sports-facilities';
+import Hostels from './pages/CampusMap/hostels';
+import Society from './pages/CampusMap/society';
+import Clubs from './pages/CampusMap/clubs';
+import CollegeCells from './pages/CampusMap/college-cells';
+
 
 // Import the App.js file from the geolocation folder
 
@@ -39,6 +46,12 @@ function App() {
           <Route path="/event/:id" element={<EventDetail />} />
           {/* Add the /track route */}
           <Route path="/track" element={<Track />} />
+          <Route path="/thrive-campus" element={<ThriveCampus />} />
+          <Route path="/sports-facilities" element={<SportsFacilities />} />
+          <Route path="/hostels" element={<Hostels />} />
+          <Route path="/society" element={<Society />} />
+          <Route path="/clubs" element={<Clubs />} />
+          <Route path="/college-cells" element={<CollegeCells />} />
         </Routes>
       </div>
     </Router>
