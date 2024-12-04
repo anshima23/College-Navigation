@@ -6,6 +6,8 @@ import campusim2 from "../../assets/college-map-im2.avif";
 import campusim3 from "../../assets/college-map-im3.avif";
 import "./CampusMap.css";
 
+
+
 const CampusMap = () => {
   const [buildings, setBuildings] = useState([]);
   const navigate = useNavigate();
@@ -44,8 +46,8 @@ const CampusMap = () => {
 
       <div className="split-section">
         <div className="text-block">
-          <h3>
-            <Link to="/thrive-on-campus">Thrive on Campus and Beyond</Link>
+        <h3>
+            <Link to="/thrive-campus">Thrive on Campus and Beyond</Link>
           </h3>
           <p>
             Discover a vibrant campus life filled with diverse opportunities for
@@ -109,17 +111,17 @@ const CampusMap = () => {
           <div className="quick-links-container">
             <div className="quick-link-card">
               <h3>
-                <Link to="/admissions">Admissions</Link>
+                <Link to="/admissions">Clubs</Link>
               </h3>
             </div>
             <div className="quick-link-card">
               <h3>
-                <Link to="/programs">Programs</Link>
+                <Link to="/programs">Cells</Link>
               </h3>
             </div>
             <div className="quick-link-card">
               <h3>
-                <Link to="/contact-us">Contact Us</Link>
+                <Link to="/contact-us">Society</Link>
               </h3>
             </div>
           </div>
@@ -145,23 +147,11 @@ const CampusMap = () => {
         </div>
       </div>
 
-      {/* Buildings Section */}
-      <h1>Campus Map</h1>
-      <div className="building-cards">
-        {buildings.map((building) => (
-          <div key={building._id} className="building-card">
-            <img
-              src={building.imageUrl}
-              alt={building.name}
-              className="building-image"
-            />
-            <h2 className="building-name">{building.name}</h2>
-            <p className="building-description">{building.shortDescription}</p>
-            <Link to={`/building/${building._id}`} className="know-more-button">
-              Know More
-            </Link>
-          </div>
-        ))}
+      
+    <div>
+
+     
+     
       </div>
     </div>
   );

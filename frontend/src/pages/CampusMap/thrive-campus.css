@@ -1,0 +1,130 @@
+/* Parent container styles */
+.thrive-campus {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+/* Left Partition */
+.left-partition {
+    margin-top: 3%;
+    flex: 1; /* Takes 50% width */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full height of the viewport */
+}
+
+/* Top Image */
+.top-image img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the entire width of the left partition */
+    margin-bottom: 2%;
+}
+
+/* Two Images Below the Top Image */
+.bottom-images {
+    display: flex;
+    justify-content: space-between;
+    gap: 2%; /* Optional gap between images */
+}
+
+.bottom-image {
+    flex: 1; /* Each image takes 50% width */
+}
+
+.bottom-image img {
+    width: 100%; /* Ensure images fill the space */
+    height: auto;
+    object-fit: cover; /* Cover the area without stretching */
+    margin-bottom: 3%;
+}
+
+/* Single Image Below the Two Bottom Images */
+.single-image img {
+    width: 100%; /* Takes full width */
+    height: auto;
+    object-fit: cover;
+}
+
+.content-section {
+    width: 96%; /* Full width */
+    color: black;
+    padding: 50px 20px; /* Add padding for content */
+    margin-bottom: 20px; /* Space between content and image section */
+    text-align: center; /* Center the text */
+    border-radius: 10px; /* Optional rounded corners */
+    font-size: 2rem; /* Large font for content */
+    height: 1400px; /* Adjust to make the block tall as required */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.heading {
+    font-size: 2rem; /* Adjust heading size */
+    font-weight: bold;
+    margin-bottom: 15px; /* Adds space below the heading */
+}
+
+.content {
+    font-size: 1rem; /* Adjust content font size */
+    line-height: 1.5;
+}
+/* Right Partition */
+.right-partition {
+    margin-top: 2.5%;
+    flex: 1; /* Take up half the width of the parent container */
+    display: flex;
+    flex-direction: column; /* Stack content and images vertically */
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    height: 100vh; /* Full height of the viewport */
+  }
+  
+  /* Content Block - Large Height */
+  .content-block {
+    width: 100%; /* Full width */
+    color: black;
+    padding: 50px 20px; /* Add padding for content */
+    margin-bottom: 20px; /* Space between content and image section */
+    text-align: center; /* Center the text */
+    border-radius: 10px; /* Optional rounded corners */
+    font-size: 2rem; /* Large font for content */
+    height: 1400px; /* Adjust to make the block tall as required */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Right Image Section */
+.right-image-section {
+    width: 100%; /* Full width of the container */
+    display: flex;
+    flex-direction: column; /* Stack the images vertically */
+    gap: 20px; /* Space between the images */
+  }
+  
+  /* Full Width Image (right1) */
+  .right-image-section img:first-child {
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the image covers the entire area */
+    border-radius: 10px; /* Optional: rounded corners */
+  }
+  
+  /* Images in the same row (right2 and right3) */
+  .right-image-section .half-width {
+    display: flex; /* Use flex to arrange images horizontally */
+    width: 100%;
+    gap: 10px; /* Space between the images */
+  }
+  
+  .right-image-section .half-width img {
+    flex: 1; /* Each image takes equal space in the row */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the images cover the container */
+    border-radius: 10px; /* Optional: rounded corners */
+  }
+  
