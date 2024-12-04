@@ -5,6 +5,7 @@ import campusim from "../../assets/college-map-im1.avif";
 import campusim2 from "../../assets/college-map-im2.avif";
 import campusim3 from "../../assets/college-map-im3.avif";
 import "./CampusMap.css";
+import Footer from "../../Components/Footer/footer";
 
 
 
@@ -146,13 +147,9 @@ const CampusMap = () => {
           />
         </div>
       </div>
-
-      
     <div>
-
-     
-     
       </div>
+      <Footer/>
     </div>
   );
 };

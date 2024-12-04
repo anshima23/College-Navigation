@@ -7,6 +7,7 @@ import left4 from "../../assets/left4.jpg";
 import right1 from "../../assets/right1.jpg";
 import right2 from "../../assets/right2.jpg";
 import right3 from "../../assets/right3.jpg";
+import Footer from "../../Components/Footer/footer";
 
 const ThriveCampus = () => {
   console.log("ThriveCampus component rendered"); // Debugging console log
@@ -69,6 +70,7 @@ const ThriveCampus = () => {
       </div>
       </div>
     </div>
+    
   );
 };
 

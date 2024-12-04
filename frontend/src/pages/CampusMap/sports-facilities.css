@@ -106,6 +106,7 @@
   
   /* New Full-Width Section */
 .full-width-section {
+  
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -114,6 +115,7 @@
   
   .half-section {
     display: flex;
+   
     justify-content: space-between;
     width: 100%;
     gap: 20px; /* Space between content and image */
@@ -123,6 +125,7 @@
   
   .content-section,
   .image-section {
+   
     flex: 1; /* Each section takes equal width */
     display: flex;
     align-items: center;
@@ -133,6 +136,7 @@
   }
   
   .content-section h2 {
+    
     font-size: 28px;
     margin-bottom: 10px;
     color: white;
@@ -149,5 +153,52 @@
     height: 100%;
     object-fit: cover;
     border-radius: 8px; /* Optional */
+  }
+  .full-width-cards {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 2rem;
+    background-color: #08223d; /* Optional: Add a background color */
+    width: 100%; /* Ensure the section spans the entire width */
+    box-sizing: border-box;
+  }
+  
+  .card {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    height: 540px;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items at the top */
+    text-align: center;
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0; /* Rounded corners at the top */
+  }
+  
+  .card-content {
+    margin-top: 3px; /* Add a 3px space between image and content */
+    padding: 1rem;
+  }
+  
+  .card-content h3 {
+    margin: 0.5rem 0;
+  }
+  
+  .card-content p {
+    font-size: 0.9rem;
+    color: #555;
   }
   
