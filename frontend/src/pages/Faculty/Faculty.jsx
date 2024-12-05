@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './Faculty.css';
+import React, { useState, useEffect } from "react";
+import "./Faculty.css";
+import campusim from "../../assets/college-map-im1.avif";
 
 const Faculty = () => {
-  const [selectedDepartment, setSelectedDepartment] = useState('Computer Science and Engineering');
+  const [selectedDepartment, setSelectedDepartment] = useState(
+    "Computer Science and Engineering"
+  );
   const [facultyList, setFacultyList] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true); // New loading state
@@ -14,10 +17,12 @@ const Faculty = () => {
       setError(null); // Reset error state
 
       try {
-        const response = await fetch(`/api/faculty/department/${encodeURIComponent(selectedDepartment)}`);
+        const response = await fetch(
+          `/api/faculty/department/${encodeURIComponent(selectedDepartment)}`
+        );
 
-        if (!response.ok) throw new Error('Failed to fetch faculty data');
-        
+        if (!response.ok) throw new Error("Failed to fetch faculty data");
+
         const data = await response.json();
         setFacultyList(data);
       } catch (err) {
@@ -31,23 +36,44 @@ const Faculty = () => {
   }, [selectedDepartment]);
 
   const departments = [
-    'Computer Science',
-    'Mathematics',
-    'Mechanical Engineering',
-    'Civil Engineering',
-    'Electrical and Electronics Engineering',
-    'Computer Science and Engineering',
-    'Information Technology',
-    'Master of Computer Applications',
+    "Computer Science",
+    "Mathematics",
+    "Mechanical Engineering",
+    "Civil Engineering",
+    "Electrical and Electronics Engineering",
+    "Computer Science and Engineering",
+    "Information Technology",
+    "Master of Computer Applications",
   ];
 
   return (
     <div className="faculty-page">
+      <div className="directors-section">
+        <div className="director-circle">
+          <img
+            src={campusim} // Replace with actual image URL
+            alt="Director"
+            className="circle-image"
+          />
+          <h3>Director Name</h3>
+        </div>
+        <div className="director-circle">
+          <img
+            src={campusim} // Replace with actual image URL
+            alt="Director General"
+            className="circle-image"
+          />
+          <h3>Director General Name</h3>
+        </div>
+      </div>
+
       <div className="department-heading-bar">
         {departments.map((department, index) => (
           <button
             key={index}
-            className={`department-button ${selectedDepartment === department ? 'active' : ''}`}
+            className={`department-button ${
+              selectedDepartment === department ? "active" : ""
+            }`}
             onClick={() => setSelectedDepartment(department)}
           >
             {department}
@@ -67,7 +93,10 @@ const Faculty = () => {
               {facultyList.map((faculty, index) => (
                 <div key={index} className="faculty-card">
                   <img
-                    src={faculty.imageUrl || 'https://via.placeholder.com/80?text=Image'}
+                    src={
+                      faculty.imageUrl ||
+                      "https://via.placeholder.com/80?text=Image"
+                    }
                     alt="Faculty"
                     className="faculty-image"
                   />

@@ -1,0 +1,109 @@
+/* Split Section Styling */
+.split-section {
+  margin-top: 3%;
+  display: flex;
+  align-items: center; /* Vertically center-align content */
+  justify-content: space-between; /* Space out text and image */
+  background-color: #f9f9f9; /* Light background color */
+  padding: 40px; /* Add padding around the section */
+  gap: 20px; /* Add spacing between text and image */
+}
+
+/* Info Section Styling */
+.info-section {
+  background-color: #e6dfdf; /* White background */
+  height: 30vh;
+  padding: 40px 20px; /* Space inside the section */
+  text-align: center; /* Center align content */
+  color: #333; /* Neutral text color */
+}
+
+.info-heading {
+  font-size: 4em; /* Larger font for heading */
+  margin-bottom: 20px; /* Space below heading */
+  font-weight: bold;
+  text-transform: uppercase; /* Optional: make heading uppercase */
+}
+
+.info-content {
+  font-size: 1.5em; /* Slightly larger font for content */
+  line-height: 1.6; /* Improve readability with line height */
+  max-width: 1300px; /* Limit content width for better readability */
+  margin: 0 auto; /* Center content block */
+  color: #555; /* Subtle text color */
+}
+
+.text-block {
+    flex: 1; /* Text block occupies 1/4th of the section */
+    max-width: 25%; /* Restrict text block width to 1/4th of the section */
+    color: #333;
+}
+
+.text-block h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.text-block p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+/* Image Block Styling */
+.image-block {
+    flex: 3; /* Image block occupies the remaining space */
+    text-align: right; /* Align image to the right */
+}
+
+.image-block img {
+    width: 80%; /* Image takes up available space */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+}
+
+.image-text-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between image and text */
+  background-color: #f5f5f5; /* Light background for contrast */
+  padding: 40px 20px;
+  gap: 20px; /* Gap between image and text */
+}
+
+/* Image Container */
+.image-container {
+  width: 80%;
+  flex: 3; /* Image takes 3/4 of the space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100%; /* Full width for responsive design */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 12px; /* Rounded corners */
+ 
+}
+
+/* Text Container */
+.text-container {
+  flex: 1; /* Text takes 1/4 of the space */
+  padding: 20px;
+  text-align: left; /* Align text to the left */
+  color: #333; /* Neutral text color */
+}
+
+.text-container h3 {
+  font-size: 1.8em; /* Slightly larger heading font */
+  margin-bottom: 15px;
+  color: #101111; /* Accent color for heading */
+}
+
+.text-container p {
+  font-size: 1em;
+  line-height: 1.6; /* Improve readability */
+  color: #555; /* Subtle text color */
+}
