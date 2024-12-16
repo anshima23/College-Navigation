@@ -1,4 +1,3 @@
-// src/routes/faculty.routes.js
 import express from 'express';
 import Faculty from '../models/faculty.model.js'; // Ensure the model uses .js extension
 
@@ -6,9 +5,9 @@ const router = express.Router();
 
 // Middleware to validate faculty data
 const validateFacultyData = (req, res, next) => {
-    const { name, department, email } = req.body;
-    if (!name || !department || !email) {
-        return res.status(400).json({ message: 'Invalid faculty data' });
+    const { name, department, email, qualification } = req.body;
+    if (!name || !department || !email || !qualification) {
+        return res.status(400).json({ message: 'Invalid faculty data. Ensure all fields are filled, including qualification.' });
     }
     next();
 };
@@ -38,25 +37,34 @@ router.get('/:id', async (req, res) => {
 
 // Create a new faculty member
 router.post('/', validateFacultyData, async (req, res) => {
-    const facultyMember = new Faculty(req.body);
+    const { name, department, email, phone, qualification } = req.body;
+
+    const facultyMember = new Faculty({ name, department, email, phone, qualification });
+
     try {
         const savedFacultyMember = await facultyMember.save();
         res.status(201).json(savedFacultyMember);
     } catch (err) {
         console.error(err); // Log error for debugging
-        res.status(400).json({ message: 'Error creating faculty member' });
+        res.status(400).json({ message: 'Error creating faculty member. Ensure all fields are valid and email is unique.' });
     }
 });
 
 // Update a faculty member
 router.put('/:id', validateFacultyData, async (req, res) => {
+    const { name, department, email, phone, qualification } = req.body;
+
     try {
-        const updatedFacultyMember = await Faculty.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedFacultyMember = await Faculty.findByIdAndUpdate(
+            req.params.id,
+            { name, department, email, phone, qualification },
+            { new: true }
+        );
         if (!updatedFacultyMember) return res.status(404).json({ message: 'Faculty member not found' });
         res.json(updatedFacultyMember);
     } catch (err) {
         console.error(err); // Log error for debugging
-        res.status(400).json({ message: 'Error updating faculty member' });
+        res.status(400).json({ message: 'Error updating faculty member.' });
     }
 });
 
@@ -72,12 +80,12 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// Get faculty members by department
 router.get('/department/:departmentName', async (req, res) => {
     const { departmentName } = req.params;
 
     try {
-        // Fetch faculty members based on the department
-        const facultyMembers = await Faculty.find({ department: departmentName }); // Adjust the query based on your model
+        const facultyMembers = await Faculty.find({ department: departmentName });
         if (!facultyMembers || facultyMembers.length === 0) {
             return res.status(404).json({ message: 'No faculty found for this department.' });
         }
@@ -88,5 +96,4 @@ router.get('/department/:departmentName', async (req, res) => {
     }
 });
 
-
-export default router; // Export the router as default
+export default router; // Export the router as default.

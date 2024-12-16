@@ -103,6 +103,7 @@ const Faculty = () => {
                   <div className="faculty-info">
                     <strong>{faculty.name}</strong>
                     <p>{faculty.title}</p>
+                    <p>{faculty.desc}</p>
                   </div>
                 </div>
               ))}
