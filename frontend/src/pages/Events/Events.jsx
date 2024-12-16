@@ -9,6 +9,7 @@ const Events = () => {
   const [view, setView] = useState('day');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [highlightColor, setHighlightColor] = useState('#007bff');
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -35,16 +36,24 @@ const Events = () => {
     const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
+    let filteredEvents = [];
+    
     if (view === 'day') {
-      return events.filter(event => new Date(event.date) >= startOfDay && new Date(event.date) <= endOfDay);
+      filteredEvents = events.filter(event => new Date(event.date) >= startOfDay && new Date(event.date) <= endOfDay);
+    } else if (view === 'week') {
+      filteredEvents = events.filter(event => new Date(event.date) >= startOfWeek && new Date(event.date) <= endOfWeek);
+    } else if (view === 'month') {
+      filteredEvents = events.filter(event => new Date(event.date) >= startOfMonth && new Date(event.date) <= endOfMonth);
     }
-    if (view === 'week') {
-      return events.filter(event => new Date(event.date) >= startOfWeek && new Date(event.date) <= endOfWeek);
+
+    if (searchQuery) {
+      filteredEvents = filteredEvents.filter(event =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
-    if (view === 'month') {
-      return events.filter(event => new Date(event.date) >= startOfMonth && new Date(event.date) <= endOfMonth);
-    }
-    return [];
+
+    return filteredEvents;
   };
 
   const handleColorChange = (color) => {
@@ -60,6 +69,8 @@ const Events = () => {
             type="text"
             placeholder="Search events..."
             className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className="calendar-container">
@@ -73,7 +84,6 @@ const Events = () => {
             }
           />
         </div>
-       
       </div>
 
       {/* Right Side */}
@@ -98,15 +108,22 @@ const Events = () => {
             Month
           </button>
         </div>
+        
+        {/* Display Events */}
         <div className="event-list">
-          {getFilteredEvents().map(event => (
-            <div key={event._id} className="event-item">
-              <Link to={`/event/${event._id}`}>
+          {getFilteredEvents().length === 0 ? (
+            <p>No events for this date.</p>
+          ) : (
+            getFilteredEvents().map((event) => (
+              <div key={event._id} className="event-item">
                 <h3>{event.title}</h3>
-                <p>{new Date(event.date).toLocaleString()}</p>
-              </Link>
-            </div>
-          ))}
+                <p>{new Date(event.date).toDateString()}</p>
+                <p>{event.description}</p>
+                <img src={event.image} alt={event.title} />
+                <Link to={`/events/${event._id}`}>View Details</Link>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

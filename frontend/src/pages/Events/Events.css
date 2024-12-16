@@ -137,8 +137,6 @@
 .event-list {
   margin-top: 20px;
 }
-
-/* Event Item Styles */
 .event-item {
   margin-bottom: 15px;
   padding: 15px;
@@ -157,13 +155,16 @@
   color: #555;
 }
 
-.event-item a {
-  text-decoration: none;
-  color: inherit;
+.event-item img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
 }
 
-.event-item a:hover h3 {
-  color: #007bff;
+/* Header Styling */
+.heading-bar h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
 }
 
 /* Sticky effect for calendar navigation and event buttons */
