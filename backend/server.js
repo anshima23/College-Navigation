@@ -19,6 +19,15 @@ import Location from './models/location.model.js'; // Import the Location model
 
 // Initialize the app
 const app = express();
+app.use(cors(
+    {
+        origin:["https://deploy-mern-lwhq.vercel.app"],
+        methods:["POST","GET"],
+        credentials:true
+    }
+));
+app.use(express.json())
+
 const PORT = process.env.PORT || 5000; // Default to port 5000 if not in .env
 const MONGOURL = process.env.MONGODB_URI;
 
