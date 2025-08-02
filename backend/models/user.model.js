@@ -1,6 +1,6 @@
 // src/models/user.model.js
 import mongoose from 'mongoose';
-import byscryptjs from 'byscryptjs';
+import bcryptjs from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -17,14 +17,14 @@ const userSchema = new mongoose.Schema({
 // Method to hash the password before saving the user
 userSchema.pre('save', async function (next) {
     if (this.isModified('passwordHash')) {
-        this.passwordHash = await byscryptjs.hash(this.passwordHash, 10);
+        this.passwordHash = await bcryptjs.hash(this.passwordHash, 10);
     }
     next();
 });
 
 // Method to compare passwords
 userSchema.methods.comparePassword = async function (password) {
-    return await byscryptjs.compare(password, this.passwordHash);
+    return await bcryptjs.compare(password, this.passwordHash);
 };
 
 const User = mongoose.model('User', userSchema);

@@ -64,7 +64,7 @@ npm run dev
 ```sh
 ##Backend Dependencies:
 {
-  "byscryptjs": "^5.1.1",
+  "bcryptjs": "^5.1.1",
   "cors": "^2.8.5",
   "dotenv": "^16.4.5",
   "express": "^4.21.1",
