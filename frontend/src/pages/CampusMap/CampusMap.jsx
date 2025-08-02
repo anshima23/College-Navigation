@@ -15,7 +15,7 @@ const CampusMap = () => {
 
   useEffect(() => {
     const fetchBuildings = async () => {
-      const response = await fetch("/api/buildings");
+      const response = await fetch("https://college-navigation-1.onrender.com/api/buildings");
       const data = await response.json();
       setBuildings(data);
     };

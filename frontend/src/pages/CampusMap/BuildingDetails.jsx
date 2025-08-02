@@ -8,7 +8,7 @@ const BuildingDetail = () => {
 
     useEffect(() => {
         const fetchBuilding = async () => {
-            const response = await fetch(`/api/buildings/${id}`);
+            const response = await fetch(`https://college-navigation-1.onrender.com/api/buildings/${id}`);
             const data = await response.json();
             setBuilding(data);
         };

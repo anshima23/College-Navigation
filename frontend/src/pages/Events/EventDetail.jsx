@@ -10,7 +10,7 @@ const EventDetail = () => {
   useEffect(() => {
     const fetchEventDetail = async () => {
       try {
-        const response = await fetch(`/api/events/${id}`); // ✅ Relative path for production
+        const response = await fetch(`https://college-navigation-1.onrender.com/api/events/${id}`); // ✅ Relative path for production
         if (!response.ok) throw new Error(`Failed to fetch event details, status: ${response.status}`);
         const data = await response.json();
         setEvent(data);

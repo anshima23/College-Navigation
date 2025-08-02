@@ -18,7 +18,7 @@ const Faculty = () => {
 
       try {
         const response = await fetch(
-          `/api/faculty/department/${encodeURIComponent(selectedDepartment)}`
+          `https://college-navigation-1.onrender.com/api/faculty/department/${encodeURIComponent(selectedDepartment)}`
         );
 
         if (!response.ok) throw new Error("Failed to fetch faculty data");

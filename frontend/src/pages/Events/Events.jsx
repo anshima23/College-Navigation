@@ -14,7 +14,7 @@ const Events = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('/api/events');
+        const response = await fetch('https://college-navigation-1.onrender.com/api/events');
         const data = await response.json();
         setEvents(data);
       } catch (error) {

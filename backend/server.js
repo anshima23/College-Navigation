@@ -30,7 +30,7 @@ mongoose.connect(process.env.MONGODB_URI || 'your_default_mongodb_uri', {
 .catch((err) => console.error('❌ MongoDB connection error:', err));
 
 // API routes
-app.use('/api/users', userRoutes);
+app.use('https://college-navigation-1.onrender.com/api/users', userRoutes);
 
 // Serve frontend from dist
 const frontendPath = path.join(__dirname, 'dist');
