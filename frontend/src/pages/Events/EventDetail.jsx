@@ -3,18 +3,14 @@ import { useParams } from 'react-router-dom';
 import './EventDetail.css';
 
 const EventDetail = () => {
-  const { id } = useParams(); // Get event ID from URL parameters
-  const [event, setEvent] = useState(null); // State to hold the event details
-  const [loading, setLoading] = useState(true); // Loading state
+  const { id } = useParams();
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Log the event ID to check if it's correctly captured
-  console.log('Event ID from URL params:', id);
-
-  // Fetch event details from the backend
   useEffect(() => {
     const fetchEventDetail = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/events/${id}`); // Use id here
+        const response = await fetch(`/api/events/${id}`); // ✅ Relative path for production
         if (!response.ok) throw new Error(`Failed to fetch event details, status: ${response.status}`);
         const data = await response.json();
         setEvent(data);
@@ -25,11 +21,11 @@ const EventDetail = () => {
       }
     };
 
-    if (id) fetchEventDetail(); // Ensure id is defined before fetching
+    if (id) fetchEventDetail();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>; // Show loading indicator while fetching
-  if (!event) return <div>No event found</div>; // Handle case when no event is found
+  if (loading) return <div>Loading...</div>;
+  if (!event) return <div>No event found</div>;
 
   return (
     <div className="event-detail-container">

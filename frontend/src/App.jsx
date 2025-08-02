@@ -23,7 +23,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await Axios.get(`/getData`); // ✅ No localhost or hardcoded domain
+        const response = await Axios.get(`/getData`); 
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
