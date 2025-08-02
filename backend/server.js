@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 // Load environment variables
 dotenv.config();
 
-import userRoutes from './routes/userRoutes.js';
+import userRoutes from './routes/user.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,7 +33,8 @@ mongoose.connect(process.env.MONGODB_URI || 'your_default_mongodb_uri', {
 app.use('/api/users', userRoutes);
 
 // Serve frontend from dist
-const frontendPath = path.join(__dirname, 'frontend', 'dist');
+const frontendPath = path.join(__dirname, 'dist');
+
 app.use(express.static(frontendPath));
 
 app.get('*', (req, res) => {
