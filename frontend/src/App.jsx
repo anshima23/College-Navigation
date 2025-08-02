@@ -17,19 +17,20 @@ import Society from './pages/CampusMap/society';
 import Clubs from './pages/CampusMap/clubs';
 import CollegeCells from './pages/CampusMap/college-cells';
 
-
-// Import the App.js file from the geolocation folder
-
 function App() {
   const [data, setData] = useState("");
 
-  const getData = async () => {
-    const response = await Axios.get("http://localhost:5000/getData");
-    setData(response.data);
-  };
-
   useEffect(() => {
-    getData();
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get(`/getData`); // ✅ No localhost or hardcoded domain
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -44,7 +45,6 @@ function App() {
           <Route path="/college-faculty/:id" element={<BuildingDetails />} />
           <Route path="/events-scheduled" element={<Events />} />
           <Route path="/event/:id" element={<EventDetail />} />
-          {/* Add the /track route */}
           <Route path="/track" element={<Track />} />
           <Route path="/thrive-campus" element={<ThriveCampus />} />
           <Route path="/sports-facilities" element={<SportsFacilities />} />
