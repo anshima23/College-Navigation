@@ -3,75 +3,58 @@ import Faculty from '../models/faculty.model.js';
 
 const router = express.Router();
 
-// Utility function to validate required fields
-const validateFacultyData = (data) => {
-  const requiredFields = [
-    'name',
-    'department',
-    'email',
-    'phone',
-    'qualification',
-    'post',
-    'degree',
-    'experience',
-    'desc',
-    'imageUrl',
-  ];
-
-  for (const field of requiredFields) {
-    if (!data[field] || data[field].toString().trim() === '') {
-      return `Missing or empty required field: ${field}`;
-    }
-  }
-
-  return null;
-};
-
-// ✅ POST - Create new faculty
-router.post('/faculty', async (req, res) => {
+// POST: Add a new faculty member
+router.post('/', async (req, res) => {
   try {
-    const validationError = validateFacultyData(req.body);
-    if (validationError) {
-      return res.status(400).json({ message: validationError });
+    const { name, department, email, phone, qualification } = req.body;
+
+    if (!name || !department || !email || !qualification) {
+      return res.status(400).json({
+        message: 'Invalid faculty data. Ensure all fields are filled.',
+      });
     }
 
-    const newFaculty = new Faculty(req.body);
-    await newFaculty.save();
-
-    res.status(201).json({
-      message: 'Faculty created successfully',
-      faculty: newFaculty,
+    const newFaculty = new Faculty({
+      name,
+      department,
+      email,
+      phone,
+      qualification,
     });
+
+    await newFaculty.save();
+    res.status(201).json({ message: 'Faculty added successfully', faculty: newFaculty });
   } catch (error) {
-    console.error('POST /faculty error:', error.message);
-    res.status(500).json({ message: 'Server error while creating faculty' });
+    console.error('Error creating faculty:', error.message);
+    res.status(500).json({ message: 'Server error while creating faculty.' });
   }
 });
 
-// ✅ PUT - Update faculty by ID
-router.put('/faculty/:id', async (req, res) => {
+// GET: Fetch all faculty
+router.get('/', async (req, res) => {
   try {
-    const facultyId = req.params.id;
-    const updates = req.body;
-
-    const validationError = validateFacultyData(updates);
-    if (validationError) {
-      return res.status(400).json({ message: validationError });
-    }
-
-    const updatedFaculty = await Faculty.findByIdAndUpdate(facultyId, updates, { new: true });
-
-    if (!updatedFaculty) {
-      return res.status(404).json({ message: 'Faculty not found' });
-    }
-
-    res.status(200).json({
-      message: 'Faculty updated successfully',
-      faculty: updatedFaculty,
-    });
+    const facultyList = await Faculty.find();
+    res.status(200).json(facultyList);
   } catch (error) {
-    console.error('PUT /faculty/:id error:', error.message);
-    res.status(500).json({ message: 'Server error while updating faculty' });
+    console.error('Error fetching faculty:', error.message);
+    res.status(500).json({ message: 'Server error while fetching faculty.' });
+  }
+});
+
+// GET: Fetch faculty by department
+router.get('/department/:deptName', async (req, res) => {
+  try {
+    const deptName = req.params.deptName;
+    const facultyInDept = await Faculty.find({ department: deptName });
+
+    if (facultyInDept.length === 0) {
+      return res.status(404).json({ message: 'No faculty found in this department.' });
+    }
+
+    res.status(200).json(facultyInDept);
+  } catch (error) {
+    console.error('Error fetching department faculty:', error.message);
+    res.status(500).json({ message: 'Server error while fetching department faculty.' });
   }
 });
 
