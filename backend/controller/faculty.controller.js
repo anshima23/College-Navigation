@@ -1,6 +1,7 @@
 // src/controllers/faculty.controller.js
 
-const Faculty = require('../models/faculty.model');
+import Faculty from '../models/faculty.model.js';
+
 
 // Get all faculty members
 const getAllFacultyMembers = async (req, res) => {
@@ -56,10 +57,10 @@ const deleteFacultyMember = async (req, res) => {
     }
 };
 
-module.exports = {
-    getAllFacultyMembers,
-    getFacultyMemberById,
-    createFacultyMember,
-    updateFacultyMember,
-    deleteFacultyMember,
+export {
+  getAllFacultyMembers,
+  getFacultyMemberById,
+  createFacultyMember,
+  updateFacultyMember,
+  deleteFacultyMember,
 };

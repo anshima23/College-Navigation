@@ -1,31 +1,21 @@
-// src/models/faculty.model.js
 import mongoose from 'mongoose';
 
 const facultySchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    department: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    phone: {
-      type: String,
-    },
-    qualification: {
-      type: String, // Qualification of the faculty (e.g., Ph.D., M.Tech, etc.)
-      required: true, // Marking it as required
-    },
+    name: { type: String, required: true },
+    department: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    phone: { type: String, required: true },
+    qualification: { type: String, required: true },
+    post: { type: String, required: true },
+    degree: { type: String, required: true },
+    experience: { type: String, required: true },
+    desc: { type: String, required: true },
+    imageUrl: { type: String, required: true },
   },
-  { timestamps: true } // Automatically adds `createdAt` and `updatedAt` timestamps
+  { timestamps: true }
 );
 
+
 const Faculty = mongoose.model('Faculty', facultySchema);
-export default Faculty; // Export the Faculty model as default.
+export default Faculty;

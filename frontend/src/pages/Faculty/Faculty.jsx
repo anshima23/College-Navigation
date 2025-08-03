@@ -9,17 +9,18 @@ const Faculty = () => {
   );
   const [facultyList, setFacultyList] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true);
 
-  // Fetch faculty data based on the selected department
   useEffect(() => {
     const fetchFacultyData = async () => {
-      setLoading(true); // Start loading
-      setError(null); // Reset error state
+      setLoading(true);
+      setError(null);
 
       try {
         const response = await fetch(
-          `https://college-navigation-1.onrender.com/api/faculty/department/${encodeURIComponent(selectedDepartment)}`
+          `https://college-navigation-1.onrender.com/api/faculty/department/${encodeURIComponent(
+            selectedDepartment
+          )}`
         );
 
         if (!response.ok) throw new Error("Failed to fetch faculty data");
@@ -29,7 +30,7 @@ const Faculty = () => {
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false); // End loading
+        setLoading(false);
       }
     };
 
@@ -51,19 +52,11 @@ const Faculty = () => {
     <div className="faculty-page">
       <div className="directors-section">
         <div className="director-circle">
-          <img
-            src={General } // Replace with actual image URL
-            alt="Director"
-            className="circle-image"
-          />
+          <img src={General} alt="Director" className="circle-image" />
           <h3>Dr. Hemant Ahuja</h3>
         </div>
         <div className="director-circle">
-          <img
-            src={director} // Replace with actual image URL
-            alt="Director General"
-            className="circle-image"
-          />
+          <img src={director} alt="Director General" className="circle-image" />
           <h3>Dr R.K. Agarwal</h3>
         </div>
       </div>
@@ -83,7 +76,7 @@ const Faculty = () => {
       </div>
 
       <div className="faculty-list">
-        {loading ? ( // Show loading state
+        {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p className="error-message">Error: {error}</p>
@@ -96,14 +89,19 @@ const Faculty = () => {
                   <img
                     src={
                       faculty.imageUrl ||
-                      "https://via.placeholder.com/80?text=Image"
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnb_I_OQt7Mcts15Kf9qwVchNCE7SJlkfYQ&s"
                     }
                     alt="Faculty"
                     className="faculty-image"
                   />
                   <div className="faculty-info">
                     <strong>{faculty.name}</strong>
-                    <p>{faculty.title}</p>
+                    <p><strong>Post:</strong> {faculty.post}</p>
+                    <p><strong>Email:</strong> {faculty.email}</p>
+                    <p><strong>Phone:</strong> {faculty.phone}</p>
+                    <p><strong>Qualification:</strong> {faculty.qualification}</p>
+                    <p><strong>Degree:</strong> {faculty.degree}</p>
+                    <p><strong>Experience:</strong> {faculty.experience}</p>
                     <p>{faculty.desc}</p>
                   </div>
                 </div>
