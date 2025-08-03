@@ -4,13 +4,26 @@ import Faculty from '../models/faculty.model.js';
 const router = express.Router();
 
 // POST: Add a new faculty member
+// POST: Add a new faculty member
 router.post('/', async (req, res) => {
   try {
-    const { name, department, email, phone, qualification } = req.body;
+    const {
+      name,
+      department,
+      email,
+      phone,
+      qualification,
+      post,
+      degree,
+      experience,
+      desc,
+      imageUrl,
+    } = req.body;
 
-    if (!name || !department || !email || !qualification) {
+    // Validate all required fields
+    if (!name || !department || !email || !phone || !qualification || !post || !degree || !experience || !desc || !imageUrl) {
       return res.status(400).json({
-        message: 'Invalid faculty data. Ensure all fields are filled.',
+        message: 'Missing required fields. Please ensure all fields are filled.',
       });
     }
 
@@ -20,6 +33,11 @@ router.post('/', async (req, res) => {
       email,
       phone,
       qualification,
+      post,
+      degree,
+      experience,
+      desc,
+      imageUrl,
     });
 
     await newFaculty.save();
@@ -29,6 +47,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Server error while creating faculty.' });
   }
 });
+
 
 // GET: Fetch all faculty
 router.get('/', async (req, res) => {
