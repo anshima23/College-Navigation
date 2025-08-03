@@ -44,14 +44,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #08488d; /* Slightly darker blue for card background */
+  background-color: #08488d;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #fff; /* White text for better contrast */
-  height: 250px;
+  color: #fff;
+  min-height: 320px; /* Increased from 250px */
   transition: transform 0.2s ease-in-out;
 }
+
 
 .faculty-image {
   width: 100px;
