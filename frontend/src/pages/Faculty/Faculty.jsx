@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Faculty.css";
-import campusim from "../../assets/college-map-im1.avif";
+import director from "../../assets/director-1.jpg";
+import General from "../../assets/Director_AKGEC.jpg";
 
 const Faculty = () => {
   const [selectedDepartment, setSelectedDepartment] = useState(
@@ -51,19 +52,19 @@ const Faculty = () => {
       <div className="directors-section">
         <div className="director-circle">
           <img
-            src={campusim} // Replace with actual image URL
+            src={General } // Replace with actual image URL
             alt="Director"
             className="circle-image"
           />
-          <h3>Director Name</h3>
+          <h3>Dr. Hemant Ahuja</h3>
         </div>
         <div className="director-circle">
           <img
-            src={campusim} // Replace with actual image URL
+            src={director} // Replace with actual image URL
             alt="Director General"
             className="circle-image"
           />
-          <h3>Director General Name</h3>
+          <h3>Dr R.K. Agarwal</h3>
         </div>
       </div>
 
