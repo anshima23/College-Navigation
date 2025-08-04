@@ -30,7 +30,7 @@ const Events = () => {
       try {
         const formattedDate = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
         const apiPath = getApiPath(view, formattedDate);
-       const apiUrl = `http://localhost:3000/api/events/${apiPath}`;
+       const apiUrl = `https://college-navigation-1.onrender.com/api/events/${apiPath}`;
         console.log('Fetching events from:', apiUrl);
 
         const response = await fetch(apiUrl);
