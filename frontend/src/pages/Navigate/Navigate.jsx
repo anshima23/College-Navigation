@@ -1,12 +1,7 @@
 
-
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
+import "./fixLeafletIcons"; // Adjust the path if needed
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
 import io from "socket.io-client";
