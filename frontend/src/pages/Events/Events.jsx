@@ -9,51 +9,53 @@ const Events = () => {
   const [view, setView] = useState('day');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [highlightColor, setHighlightColor] = useState('#007bff');
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // ✅ Define getApiPath before using it
+  const getApiPath = (view, date) => {
+    switch (view) {
+      case 'day':
+        return `date/${date}`;
+      case 'week':
+        return `week/${date}`;
+      case 'month':
+        return `month/${date}`;
+      default:
+        return `date/${date}`;
+    }
+  };
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchFilteredEvents = async () => {
       try {
-        const response = await fetch('https://college-navigation-1.onrender.com/api/events');
+        const formattedDate = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+        const apiPath = getApiPath(view, formattedDate);
+       const apiUrl = `http://localhost:3000/api/events/${apiPath}`;
+        console.log('Fetching events from:', apiUrl);
+
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error ${response.status}: ${errorText}`);
+        }
+
         const data = await response.json();
         setEvents(data);
       } catch (error) {
-        console.error('Error fetching events:', error);
+        console.error('Error fetching events:', error.message);
       }
     };
 
-    fetchEvents();
-  }, []);
+    fetchFilteredEvents();
+  }, [view, currentDate]);
 
   const getFilteredEvents = () => {
-    const startOfDay = new Date(currentDate.setHours(0, 0, 0, 0));
-    const endOfDay = new Date(currentDate.setHours(23, 59, 59, 999));
-    const startOfWeek = new Date(startOfDay);
-    startOfWeek.setDate(startOfDay.getDate() - startOfDay.getDay());
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6);
-
-    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-
-    let filteredEvents = [];
-    
-    if (view === 'day') {
-      filteredEvents = events.filter(event => new Date(event.date) >= startOfDay && new Date(event.date) <= endOfDay);
-    } else if (view === 'week') {
-      filteredEvents = events.filter(event => new Date(event.date) >= startOfWeek && new Date(event.date) <= endOfWeek);
-    } else if (view === 'month') {
-      filteredEvents = events.filter(event => new Date(event.date) >= startOfMonth && new Date(event.date) <= endOfMonth);
-    }
-
-    if (searchQuery) {
-      filteredEvents = filteredEvents.filter(event =>
-        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        event.description.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    return filteredEvents;
+    if (!searchQuery) return events;
+    return events.filter(event =>
+      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   };
 
   const handleColorChange = (color) => {
@@ -108,7 +110,7 @@ const Events = () => {
             Month
           </button>
         </div>
-        
+
         {/* Display Events */}
         <div className="event-list">
           {getFilteredEvents().length === 0 ? (
@@ -117,9 +119,11 @@ const Events = () => {
             getFilteredEvents().map((event) => (
               <div key={event._id} className="event-item">
                 <h3>{event.title}</h3>
-                <p>{new Date(event.date).toDateString()}</p>
+               <p>{new Date(event.dateTime).toDateString()}</p>
                 <p>{event.description}</p>
-                <img src={event.image} alt={event.title} />
+                {event.image && (
+                  <img src={event.image} alt={event.title} />
+                )}
                 <Link to={`/events/${event._id}`}>View Details</Link>
               </div>
             ))

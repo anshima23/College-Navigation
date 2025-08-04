@@ -17,22 +17,26 @@ const getStartAndEndOfWeek = (date) => {
     const startOfWeek = new Date(date);
     const endOfWeek = new Date(date);
     const dayOfWeek = startOfWeek.getDay();
-    startOfWeek.setDate(startOfWeek.getDate() - dayOfWeek); // Get the Sunday of the week
-    endOfWeek.setDate(endOfWeek.getDate() + (6 - dayOfWeek)); // Get the Saturday of the week
+    startOfWeek.setDate(startOfWeek.getDate() - dayOfWeek); // Sunday
+    endOfWeek.setDate(endOfWeek.getDate() + (6 - dayOfWeek)); // Saturday
+    startOfWeek.setHours(0, 0, 0, 0);
+    endOfWeek.setHours(23, 59, 59, 999);
     return { startOfWeek, endOfWeek };
 };
 
 // Helper function to get the start and end of a month
 const getStartAndEndOfMonth = (date) => {
     const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0); // Last day of the month
+    const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    startOfMonth.setHours(0, 0, 0, 0);
+    endOfMonth.setHours(23, 59, 59, 999);
     return { startOfMonth, endOfMonth };
 };
 
 // Get all events
 router.get('/', async (req, res) => {
     try {
-        const events = await Event.find();
+        const events = await Event.find().sort({ dateTime: 1 });
         res.json(events);
     } catch (err) {
         console.error(err);
@@ -44,23 +48,25 @@ router.get('/', async (req, res) => {
 router.get('/date/:selectedDate', async (req, res) => {
     try {
         const { selectedDate } = req.params;
+        console.log('🔍 Requested date:', selectedDate);
 
-        // Convert selectedDate to a Date object (expecting YYYY-MM-DD format)
         const startOfDay = new Date(selectedDate);
-        const endOfDay = new Date(startOfDay);
-        endOfDay.setHours(23, 59, 59, 999); // Set to the end of the day
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(selectedDate);
+        endOfDay.setHours(23, 59, 59, 999);
 
-        // Find events that fall on the selected date
         const events = await Event.find({
-            date: { $gte: startOfDay, $lt: endOfDay },
-        }).sort({ date: 1 });
+            dateTime: { $gte: startOfDay, $lt: endOfDay },
+        }).sort({ dateTime: 1 });
 
+        console.log('✅ Events found:', events.length);
         res.json(events);
     } catch (err) {
-        console.error(err);
+        console.error('❌ Error fetching day events:', err);
         res.status(500).json({ message: 'Error fetching events' });
     }
 });
+
 
 // Get events by selected week (Week View)
 router.get('/week/:selectedDate', async (req, res) => {
@@ -71,8 +77,8 @@ router.get('/week/:selectedDate', async (req, res) => {
         const { startOfWeek, endOfWeek } = getStartAndEndOfWeek(selectedDay);
 
         const events = await Event.find({
-            date: { $gte: startOfWeek, $lt: endOfWeek },
-        }).sort({ date: 1 });
+            dateTime: { $gte: startOfWeek, $lt: endOfWeek },
+        }).sort({ dateTime: 1 });
 
         res.json(events);
     } catch (err) {
@@ -90,8 +96,8 @@ router.get('/month/:selectedDate', async (req, res) => {
         const { startOfMonth, endOfMonth } = getStartAndEndOfMonth(selectedDay);
 
         const events = await Event.find({
-            date: { $gte: startOfMonth, $lt: endOfMonth },
-        }).sort({ date: 1 });
+            dateTime: { $gte: startOfMonth, $lt: endOfMonth },
+        }).sort({ dateTime: 1 });
 
         res.json(events);
     } catch (err) {
@@ -148,5 +154,4 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-// Export the router as default
 export default router;

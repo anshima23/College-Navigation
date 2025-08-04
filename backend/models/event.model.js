@@ -3,37 +3,20 @@
 import mongoose from 'mongoose';
 
 // Define the Event schema
+// models/event.model.js
 const eventSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    date: {
-        type: Date,
-        required: true,
-    },
-    Time: {
-        type: Date,
-        required: true,
-    },
-    location: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String, // URL of the event image
-        required: true,
-    },
-    category: {
-        type: String,
-        enum: ['previous', 'running', 'future'], // Define categories
-        required: true,
-    },
+  title: { type: String, required: true },
+  dateTime: { type: Date, required: true }, // unified date and time
+  location: { type: String, required: true },
+  description: { type: String, required: true },
+  image: { type: String, required: true },
+  category: {
+    type: String,
+    enum: ['previous', 'running', 'future'],
+    required: true,
+  },
 });
+
 
 // Create the Event model
 const Event = mongoose.model('Event', eventSchema);

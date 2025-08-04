@@ -9,6 +9,7 @@ dotenv.config();
 
 import userRoutes from './routes/user.routes.js';
 import facultyRoutes from './routes/faculty.routes.js';
+import eventsRoutes from './routes/event.routes.js'; 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,14 +32,23 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/faculty', facultyRoutes);
+app.use('/api/events', eventsRoutes);
+
+// ✅ Add this block to catch unknown API routes BEFORE frontend fallback
+app.get('/api/*', (req, res) => {
+  res.status(404).json({ message: 'API route not found' });
+});
 
 // Serve frontend for production
 const frontendPath = path.resolve(__dirname, 'dist');
 app.use(express.static(frontendPath));
 
-app.get('*', (req, res) => {
+// ✅ Frontend fallback for non-API routes
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
+
+
 
 // Start server
 app.listen(PORT, () => {
