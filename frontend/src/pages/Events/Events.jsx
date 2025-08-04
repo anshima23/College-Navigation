@@ -11,7 +11,6 @@ const Events = () => {
   const [highlightColor, setHighlightColor] = useState("#007bff");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // ✅ Define getApiPath before using it
   const getApiPath = (view, date) => {
     switch (view) {
       case "day":
@@ -25,36 +24,34 @@ const Events = () => {
     }
   };
 
- useEffect(() => {
-  const fetchFilteredEvents = async () => {
-    try {
-      // 🔧 Use local date format (not UTC)
-      const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
-      
-      const apiPath = getApiPath(view, formattedDate);
-      const apiUrl = `/api/events/${apiPath}?t=${Date.now()}`;
+  useEffect(() => {
+    const fetchFilteredEvents = async () => {
+      try {
+        const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
+        
+        const apiPath = getApiPath(view, formattedDate);
+        const apiUrl = `/api/events/${apiPath}?t=${Date.now()}`;
 
-      console.log("Fetching events from:", apiUrl);
+        console.log("Fetching events from:", apiUrl);
 
-      const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl);
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Error ${response.status}: ${errorText}`);
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        setEvents(data);
+      } catch (error) {
+        console.error("Error fetching events:", error.message);
       }
+    };
 
-      const data = await response.json();
-      setEvents(data);
-    } catch (error) {
-      console.error("Error fetching events:", error.message);
-    }
-  };
-
-  fetchFilteredEvents();
-}, [view, currentDate]);
-
+    fetchFilteredEvents();
+  }, [view, currentDate]);
 
   const getFilteredEvents = () => {
     if (!searchQuery) return events;
@@ -128,7 +125,18 @@ const Events = () => {
                 <h3>{event.title}</h3>
                 <p>{new Date(event.dateTime).toDateString()}</p>
                 <p>{event.description}</p>
-                {event.image && <img src={event.image} alt={event.title} />}
+                <img
+                  src={
+                    event.image ||
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz1bresWcnRlQgHuwMcbo16hOf9tGbzSgvdQ&s"
+                  }
+                  alt={event.title}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src =
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz1bresWcnRlQgHuwMcbo16hOf9tGbzSgvdQ&s";
+                  }}
+                />
                 <Link to={`/events/${event._id}`}>View Details</Link>
               </div>
             ))
