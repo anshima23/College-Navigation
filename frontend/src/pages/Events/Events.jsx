@@ -25,31 +25,36 @@ const Events = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchFilteredEvents = async () => {
-      try {
-        const formattedDate = currentDate.toISOString().split("T")[0]; // YYYY-MM-DD
-        const apiPath = getApiPath(view, formattedDate);
-        const apiUrl = `/api/events/${apiPath}?t=${Date.now()}`;
+ useEffect(() => {
+  const fetchFilteredEvents = async () => {
+    try {
+      // 🔧 Use local date format (not UTC)
+      const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
+      
+      const apiPath = getApiPath(view, formattedDate);
+      const apiUrl = `/api/events/${apiPath}?t=${Date.now()}`;
 
-        console.log("Fetching events from:", apiUrl);
+      console.log("Fetching events from:", apiUrl);
 
-        const response = await fetch(apiUrl);
+      const response = await fetch(apiUrl);
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Error ${response.status}: ${errorText}`);
-        }
-
-        const data = await response.json();
-        setEvents(data);
-      } catch (error) {
-        console.error("Error fetching events:", error.message);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error ${response.status}: ${errorText}`);
       }
-    };
 
-    fetchFilteredEvents();
-  }, [view, currentDate]);
+      const data = await response.json();
+      setEvents(data);
+    } catch (error) {
+      console.error("Error fetching events:", error.message);
+    }
+  };
+
+  fetchFilteredEvents();
+}, [view, currentDate]);
+
 
   const getFilteredEvents = () => {
     if (!searchQuery) return events;

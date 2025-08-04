@@ -44,28 +44,34 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get events by selected date (Day View)
+
 router.get('/date/:selectedDate', async (req, res) => {
-    try {
-        const { selectedDate } = req.params;
-        console.log('🔍 Requested date:', selectedDate);
+  try {
+    const { selectedDate } = req.params;
 
-        const startOfDay = new Date(selectedDate);
-        startOfDay.setHours(0, 0, 0, 0);
-        const endOfDay = new Date(selectedDate);
-        endOfDay.setHours(23, 59, 59, 999);
+    // Construct date in local time zone (e.g. IST)
+    const [year, month, day] = selectedDate.split('-').map(Number);
+    const localDate = new Date(year, month - 1, day);
 
-        const events = await Event.find({
-            dateTime: { $gte: startOfDay, $lt: endOfDay },
-        }).sort({ dateTime: 1 });
+    const startOfDay = new Date(localDate);
+    startOfDay.setHours(0, 0, 0, 0);
 
-        console.log('✅ Events found:', events.length);
-        res.json(events);
-    } catch (err) {
-        console.error('❌ Error fetching day events:', err);
-        res.status(500).json({ message: 'Error fetching events' });
-    }
+    const endOfDay = new Date(localDate);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const events = await Event.find({
+      dateTime: { $gte: startOfDay, $lt: endOfDay },
+    }).sort({ dateTime: 1 });
+
+    res.json(events);
+  } catch (err) {
+    console.error('❌ Error fetching day events:', err);
+    res.status(500).json({ message: 'Error fetching events' });
+  }
 });
+
+
+
 
 
 // Get events by selected week (Week View)
