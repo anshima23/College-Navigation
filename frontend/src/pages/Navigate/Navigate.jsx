@@ -2,8 +2,21 @@ import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import io from "socket.io-client";
 import "./navigate.css";
+
+// ✅ Fix: Import marker images manually
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+// ✅ Fix: Configure Leaflet to use imported icons
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
 const socket = io();
 
@@ -18,16 +31,13 @@ const Navigate = () => {
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
 
   useEffect(() => {
-    // Initialize map
-    const mapInstance = L.map("map").setView([28.67573005328916, 77.50249762213528], 16);
+    const mapInstance = L.map("map").setView([28.6757, 77.5025], 16);
 
-    // Add tile layer
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap contributors",
       maxZoom: 19,
     }).addTo(mapInstance);
 
-    // Set bounds
     const bounds = L.latLngBounds([[28.672, 77.497], [28.678, 77.507]]);
     mapInstance.setMaxBounds(bounds);
     mapInstance.fitBounds(bounds);
@@ -35,7 +45,7 @@ const Navigate = () => {
     setMap(mapInstance);
 
     return () => {
-      mapInstance.remove(); // Cleanup map
+      mapInstance.remove(); // Cleanup
     };
   }, []);
 
@@ -47,7 +57,9 @@ const Navigate = () => {
       return;
     }
 
-    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(inputValue)}&format=json&addressdetails=1&limit=5`;
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+      inputValue
+    )}&format=json&addressdetails=1&limit=5`;
 
     try {
       const response = await fetch(url);
@@ -66,7 +78,6 @@ const Navigate = () => {
 
   const addMarker = (location, isCurrentLocation) => {
     const { lat, lon } = location;
-
     if (!map) return;
 
     const marker = isCurrentLocation ? currentMarker : destinationMarker;
@@ -78,7 +89,9 @@ const Navigate = () => {
         .bindPopup(popupText)
         .openPopup();
 
-      isCurrentLocation ? setCurrentMarker(newMarker) : setDestinationMarker(newMarker);
+      isCurrentLocation
+        ? setCurrentMarker(newMarker)
+        : setDestinationMarker(newMarker);
     } else {
       marker.setLatLng([lat, lon]);
     }
@@ -97,44 +110,38 @@ const Navigate = () => {
   };
 
   const findRoute = () => {
-    if (!map || !currentMarker || !destinationMarker) {
-      console.error("Markers not set properly.");
-      return;
-    }
+    if (!map || !currentMarker || !destinationMarker) return;
 
     const startLatLng = currentMarker.getLatLng();
     const endLatLng = destinationMarker.getLatLng();
 
     if (routingControl) {
-      map.removeControl(routingControl); // Remove the previous route, if any
+      map.removeControl(routingControl);
     }
 
-    // Add the routing control to the map
     const newRoutingControl = L.Routing.control({
       waypoints: [L.latLng(startLatLng), L.latLng(endLatLng)],
       routeWhileDragging: true,
       lineOptions: {
-        styles: [{ color: "blue", weight: 5 }], // Style of the route line
+        styles: [{ color: "blue", weight: 5 }],
       },
       createMarker: (i, waypoint) => {
         return L.marker(waypoint.latLng, {
           draggable: true,
         });
       },
-      show: true, // Enable route instructions
+      show: true,
     })
       .on("routesfound", (e) => {
         const routes = e.routes;
-        console.log("Routes found:", routes);
         if (routes.length > 0) {
           const route = routes[0];
-          console.log("Full route summary:", route.summary);
-          console.log("Route instructions:", route.instructions);
+          console.log("Route summary:", route.summary);
         }
       })
       .addTo(map);
 
-    setRoutingControl(newRoutingControl); // Save the routing control to state
+    setRoutingControl(newRoutingControl);
   };
 
   return (
