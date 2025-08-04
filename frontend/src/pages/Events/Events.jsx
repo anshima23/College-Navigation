@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import './Events.css';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "./Events.css";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
-  const [view, setView] = useState('day');
+  const [view, setView] = useState("day");
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [highlightColor, setHighlightColor] = useState('#007bff');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [highlightColor, setHighlightColor] = useState("#007bff");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // ✅ Define getApiPath before using it
   const getApiPath = (view, date) => {
     switch (view) {
-      case 'day':
+      case "day":
         return `date/${date}`;
-      case 'week':
+      case "week":
         return `week/${date}`;
-      case 'month':
+      case "month":
         return `month/${date}`;
       default:
         return `date/${date}`;
@@ -28,11 +28,11 @@ const Events = () => {
   useEffect(() => {
     const fetchFilteredEvents = async () => {
       try {
-        const formattedDate = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+        const formattedDate = currentDate.toISOString().split("T")[0]; // YYYY-MM-DD
         const apiPath = getApiPath(view, formattedDate);
-       const apiUrl = `https://college-navigation-1.onrender.com/api/events/${apiPath}?t=${Date.now()}`;
+        const apiUrl = `/api/events/${apiPath}?t=${Date.now()}`;
 
-        console.log('Fetching events from:', apiUrl);
+        console.log("Fetching events from:", apiUrl);
 
         const response = await fetch(apiUrl);
 
@@ -44,7 +44,7 @@ const Events = () => {
         const data = await response.json();
         setEvents(data);
       } catch (error) {
-        console.error('Error fetching events:', error.message);
+        console.error("Error fetching events:", error.message);
       }
     };
 
@@ -53,9 +53,10 @@ const Events = () => {
 
   const getFilteredEvents = () => {
     if (!searchQuery) return events;
-    return events.filter(event =>
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchQuery.toLowerCase())
+    return events.filter(
+      (event) =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
   };
 
@@ -82,7 +83,7 @@ const Events = () => {
             onChange={setCurrentDate}
             tileClassName={({ date }) =>
               date.toDateString() === new Date().toDateString()
-                ? `highlight-today-${highlightColor.replace('#', '')}`
+                ? `highlight-today-${highlightColor.replace("#", "")}`
                 : null
             }
           />
@@ -93,20 +94,20 @@ const Events = () => {
       <div className="events-right">
         <div className="heading-bar">
           <button
-            className={view === 'day' ? 'active' : ''}
-            onClick={() => setView('day')}
+            className={view === "day" ? "active" : ""}
+            onClick={() => setView("day")}
           >
             Day
           </button>
           <button
-            className={view === 'week' ? 'active' : ''}
-            onClick={() => setView('week')}
+            className={view === "week" ? "active" : ""}
+            onClick={() => setView("week")}
           >
             Week
           </button>
           <button
-            className={view === 'month' ? 'active' : ''}
-            onClick={() => setView('month')}
+            className={view === "month" ? "active" : ""}
+            onClick={() => setView("month")}
           >
             Month
           </button>
@@ -120,11 +121,9 @@ const Events = () => {
             getFilteredEvents().map((event) => (
               <div key={event._id} className="event-item">
                 <h3>{event.title}</h3>
-               <p>{new Date(event.dateTime).toDateString()}</p>
+                <p>{new Date(event.dateTime).toDateString()}</p>
                 <p>{event.description}</p>
-                {event.image && (
-                  <img src={event.image} alt={event.title} />
-                )}
+                {event.image && <img src={event.image} alt={event.title} />}
                 <Link to={`/events/${event._id}`}>View Details</Link>
               </div>
             ))
