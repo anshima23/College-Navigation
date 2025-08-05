@@ -11,6 +11,13 @@
 
 Navigating a large college campus can be a challenge for new students, parents, and faculty members. The College Navigation System is designed to provide seamless indoor and outdoor navigation within the campus. This interactive system includes a 3D model of the campus, real-time navigation features, and faculty directories to enhance the user experience.
 
+
+---
+
+### 🚀 **Check This Project Live:** 👉 **[https://college-navigation-1.onrender.com/](https://college-navigation-1.onrender.com/)**
+
+---
+
 What makes our project unique?
 
 - 🗺 Interactive Campus Map: Visual representation of all buildings, hostels, sports fields, and key locations.
